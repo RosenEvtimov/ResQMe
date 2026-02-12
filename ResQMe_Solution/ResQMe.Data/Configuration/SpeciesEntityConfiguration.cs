@@ -1,4 +1,4 @@
-﻿namespace ResQMe_Project.Data.Configuration
+﻿namespace ResQMe.Data.Configuration
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;

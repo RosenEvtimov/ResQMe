@@ -2,7 +2,7 @@ namespace ResQMe_Project
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using ResQMe_Project.Data;
+    using ResQMe.Data;
 
     public class Program
     {

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ResQMe_Project.Data;
+using ResQMe.Data;
 
 #nullable disable
 
-namespace ResQMe_Project.Data.Migrations
+namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

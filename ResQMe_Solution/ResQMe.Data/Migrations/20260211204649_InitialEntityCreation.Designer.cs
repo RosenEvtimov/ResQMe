@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ResQMe_Project.Data;
+using ResQMe.Data;
 
 #nullable disable
 
-namespace ResQMe_Project.Data.Migrations
+namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
     [Migration("20260211204649_InitialEntityCreation")]

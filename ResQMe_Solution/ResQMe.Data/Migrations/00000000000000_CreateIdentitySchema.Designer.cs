@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ResQMe_Project.Data;
+using ResQMe.Data;
 
-namespace ResQMe_Project.Data.Migrations
+namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]

@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2AC128AD-3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.Data.Models", "ResQMe.Data.Models\ResQMe.Data.Models.csproj", "{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.Data", "ResQMe.Data\ResQMe.Data.csproj", "{36A1988E-8224-476C-B1D7-418B9FE9EC9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{18650D2E-8179-4444-A7D0-40C2C0D8ABE7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{929A7CFC-D543-6551-A637-CF565966D399} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E} = {2AC128AD-3025-4263-B178-3E37FC8E4798}
+		{36A1988E-8224-476C-B1D7-418B9FE9EC9F} = {2AC128AD-3025-4263-B178-3E37FC8E4798}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {871B4843-7849-403B-942B-FB8CDA9C3C2E}

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ResQMe_Project.Data.Migrations
+namespace ResQMe.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialEntityCreation : Migration

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ResQMe_Project.Data.Migrations
+namespace ResQMe.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
