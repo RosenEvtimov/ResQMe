@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{02EA681E-C7D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.ViewModels", "ResQMe.Wev.ViewModels\ResQMe.ViewModels.csproj", "{7F0BAB23-722B-4123-9401-5DE68813DA7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.GCommon", "ResQMe.GCommon\ResQMe.GCommon.csproj", "{94410F6B-2517-4203-A91B-5DC14E99CDFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{7F0BAB23-722B-4123-9401-5DE68813DA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F0BAB23-722B-4123-9401-5DE68813DA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F0BAB23-722B-4123-9401-5DE68813DA7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94410F6B-2517-4203-A91B-5DC14E99CDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94410F6B-2517-4203-A91B-5DC14E99CDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94410F6B-2517-4203-A91B-5DC14E99CDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94410F6B-2517-4203-A91B-5DC14E99CDFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

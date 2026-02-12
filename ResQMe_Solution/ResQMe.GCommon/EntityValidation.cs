@@ -1,4 +1,4 @@
-﻿namespace ResQMe_Project.Common
+﻿namespace ResQMe.GCommon
 {
     public static class EntityValidation
     {

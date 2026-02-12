@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static Common.EntityValidation;
+    using static ResQMe.GCommon.EntityValidation;
 
     public class Breed
     {

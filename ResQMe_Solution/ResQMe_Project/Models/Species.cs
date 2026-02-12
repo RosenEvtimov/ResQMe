@@ -1,7 +1,7 @@
 ﻿namespace ResQMe_Project.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using static Common.EntityValidation;
+    using static ResQMe.GCommon.EntityValidation;
 
     public class Species
     {
