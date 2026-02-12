@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using ResQMe_Project.ViewModels;
+using ResQMe.ViewModels;
 
 namespace ResQMe_Project.Controllers
 {

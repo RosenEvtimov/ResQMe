@@ -1,4 +1,4 @@
-﻿namespace ResQMe_Project.Models
+﻿namespace ResQMe.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;

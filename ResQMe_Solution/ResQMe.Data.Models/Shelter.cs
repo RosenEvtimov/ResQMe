@@ -1,5 +1,6 @@
-﻿namespace ResQMe_Project.Models
+﻿namespace ResQMe.Data.Models
 {
+    using ResQMe.Data.Models;
     using System.ComponentModel.DataAnnotations;
     using static ResQMe.GCommon.EntityValidation;
 

@@ -1,4 +1,4 @@
-namespace ResQMe_Project.ViewModels
+namespace ResQMe.ViewModels
 {
     public class ErrorViewModel
     {

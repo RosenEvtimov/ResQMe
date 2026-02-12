@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ResQMe_Project.Models;
+using ResQMe.Data.Models;
 
 namespace ResQMe_Project.Data
 {

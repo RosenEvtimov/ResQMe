@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ResQMe.Data.Models\ResQMe.Data.Models.csproj" />
     <ProjectReference Include="..\ResQMe.GCommon\ResQMe.GCommon.csproj" />
     <ProjectReference Include="..\ResQMe.ViewModels\ResQMe.ViewModels.csproj" />
   </ItemGroup>

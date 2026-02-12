@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.GCommon", "ResQMe.GC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.ViewModels", "ResQMe.ViewModels\ResQMe.ViewModels.csproj", "{929A7CFC-D543-6551-A637-CF565966D399}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2AC128AD-3025-4263-B178-3E37FC8E4798}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.Data.Models", "ResQMe.Data.Models\ResQMe.Data.Models.csproj", "{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{929A7CFC-D543-6551-A637-CF565966D399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{929A7CFC-D543-6551-A637-CF565966D399}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{929A7CFC-D543-6551-A637-CF565966D399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{18650D2E-8179-4444-A7D0-40C2C0D8ABE7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{929A7CFC-D543-6551-A637-CF565966D399} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E} = {2AC128AD-3025-4263-B178-3E37FC8E4798}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {871B4843-7849-403B-942B-FB8CDA9C3C2E}

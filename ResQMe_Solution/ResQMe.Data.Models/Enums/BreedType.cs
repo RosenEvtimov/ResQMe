@@ -1,4 +1,4 @@
-﻿namespace ResQMe_Project.Models.Enums
+﻿namespace ResQMe.Data.Models.Enums
 {
     public enum BreedType
     {

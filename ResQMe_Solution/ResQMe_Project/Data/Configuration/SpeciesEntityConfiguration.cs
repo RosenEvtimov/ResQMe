@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using ResQMe_Project.Models;
+    using ResQMe.Data.Models;
 
     public class SpeciesEntityConfiguration : IEntityTypeConfiguration<Species>
     {
