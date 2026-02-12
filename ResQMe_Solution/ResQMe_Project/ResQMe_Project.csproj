@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ResQMe.GCommon\ResQMe.GCommon.csproj" />
-    <ProjectReference Include="..\ResQMe.Wev.ViewModels\ResQMe.ViewModels.csproj" />
+    <ProjectReference Include="..\ResQMe.ViewModels\ResQMe.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
