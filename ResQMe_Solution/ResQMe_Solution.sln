@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.Data.Models", "ResQM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.Data", "ResQMe.Data\ResQMe.Data.csproj", "{36A1988E-8224-476C-B1D7-418B9FE9EC9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9E15109E-3F16-4F12-8ECB-A52853BA6AE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResQMe.Services.Core", "ResQMe.Services.Core\ResQMe.Services.Core.csproj", "{5211956F-39DE-49C9-A10A-7A96E3A58AC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36A1988E-8224-476C-B1D7-418B9FE9EC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5211956F-39DE-49C9-A10A-7A96E3A58AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5211956F-39DE-49C9-A10A-7A96E3A58AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5211956F-39DE-49C9-A10A-7A96E3A58AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5211956F-39DE-49C9-A10A-7A96E3A58AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{929A7CFC-D543-6551-A637-CF565966D399} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{F3E1F9D6-74E6-4B54-8931-E17832AEEA4E} = {2AC128AD-3025-4263-B178-3E37FC8E4798}
 		{36A1988E-8224-476C-B1D7-418B9FE9EC9F} = {2AC128AD-3025-4263-B178-3E37FC8E4798}
+		{5211956F-39DE-49C9-A10A-7A96E3A58AC6} = {9E15109E-3F16-4F12-8ECB-A52853BA6AE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {871B4843-7849-403B-942B-FB8CDA9C3C2E}

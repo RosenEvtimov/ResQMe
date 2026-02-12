@@ -3,6 +3,8 @@ namespace ResQMe_Project
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using ResQMe.Data;
+    using ResQMe.Services.Core;
+    using ResQMe.Services.Core.Interfaces;
 
     public class Program
     {
@@ -22,6 +24,9 @@ namespace ResQMe_Project
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ResQMeDbContext>();
             builder.Services.AddControllersWithViews();
+
+            /* My Services DI */
+            builder.Services.AddScoped<IAnimalService, AnimalService>();
 
             WebApplication app = builder.Build();
 

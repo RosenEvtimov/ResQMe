@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.animal-image {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+}

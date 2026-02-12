@@ -1,0 +1,53 @@
+﻿@model ResQMe.ViewModels.Animal.AnimalDetailsViewModel
+
+<div class="container mt-4">
+    <div class="row">
+
+        <div class="col-md-6">
+            <img src="@Model.ImageUrl"
+                 class="img-fluid rounded"
+                 style="height:400px; width:100%; object-fit:cover;" />
+        </div>
+
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+
+            <p>
+				<strong>Age:</strong> @Model.Age <br />
+                <strong>Gender:</strong> @Model.Gender <br />
+                <strong>Breed:</strong> @Model.BreedDisplay <br />
+                <strong>Species:</strong> @Model.Species
+            </p>
+
+            @if (Model.IsAdopted)
+            {
+                <span class="badge bg-danger">Adopted</span>
+            }
+            else
+            {
+                <span class="badge bg-success">Available for adoption</span>
+            }
+
+            <hr />
+
+            <h5>Description</h5>
+            <p>@Model.Description</p>
+
+            <hr />
+
+            <h5>Shelter Information</h5>
+            <p>
+                <strong>Name:</strong> @Model.ShelterName <br />
+                <strong>City:</strong> @Model.ShelterCity <br />
+                <strong>Address:</strong> @Model.ShelterAddress <br />
+                <strong>Phone:</strong> @Model.ShelterPhone <br />
+                <strong>Email:</strong> @Model.ShelterEmail
+            </p>
+
+            <a asp-action="Index" class="btn btn-secondary mt-3">
+                Back to list
+            </a>
+        </div>
+
+    </div>
+</div>

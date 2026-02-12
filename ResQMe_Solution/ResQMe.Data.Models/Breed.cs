@@ -10,7 +10,7 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(MaxBreedNameLength, MinimumLength = MinBreedNameLength)]
+        [MaxLength(MaxBreedNameLength)]
         public string Name { get; set; } = null!;
 
         [Required]

@@ -11,7 +11,7 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(MaxAnimalNameLength, MinimumLength = MinAnimalNameLength)]
+        [MaxLength(MaxAnimalNameLength)]
         public string Name { get; set; } = null!;
 
         [Required]
@@ -34,7 +34,7 @@
         public Breed? Breed { get; set; }
 
         [Required]
-        [StringLength(MaxAnimalDescriptionLength, MinimumLength = MinAnimalDescriptionLength)]
+        [MaxLength(MaxAnimalDescriptionLength)]
         public string Description { get; set; } = null!;
 
         [Required]

@@ -9,7 +9,7 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(MaxSpeciesNameLength, MinimumLength = MinSpeciesNameLength)]
+        [MaxLength(MaxSpeciesNameLength)]
         public string Name { get; set; } = null!;
 
         public virtual ICollection<Breed> Breeds { get; set; } = new HashSet<Breed>();

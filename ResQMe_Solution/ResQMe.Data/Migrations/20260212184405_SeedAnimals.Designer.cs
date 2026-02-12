@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResQMe.Data;
 
@@ -11,9 +12,11 @@ using ResQMe.Data;
 namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260212184405_SeedAnimals")]
+    partial class SeedAnimals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -593,11 +596,6 @@ namespace ResQMe.Data.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(750)
-                        .HasColumnType("nvarchar(750)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -623,7 +621,6 @@ namespace ResQMe.Data.Migrations
                             Id = 1,
                             Address = "ul.Mariya Luiza 10",
                             City = "Burgas",
-                            Description = "Volunteer-run shelter dedicated to rescuing abandoned animals in Burgas.",
                             Email = "furryfriends@gmail.com",
                             Name = "Furry Friends Refuge",
                             Phone = "056111222"
@@ -633,7 +630,6 @@ namespace ResQMe.Data.Migrations
                             Id = 2,
                             Address = "ul.Tsar Kaloyan 190",
                             City = "Burgas",
-                            Description = "Non-profit organisation dedicated to fostering homeless animals in Burgas.",
                             Email = "safepaws@gmail.com",
                             Name = "Safe Paws",
                             Phone = "056333444"

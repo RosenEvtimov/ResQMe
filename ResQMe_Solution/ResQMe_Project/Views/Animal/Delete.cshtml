@@ -1,0 +1,38 @@
+﻿@model ResQMe.ViewModels.Animal.AnimalDetailsViewModel
+
+<h2 class="text-danger mb-4">Delete Animal</h2>
+
+<div class="card mb-3" style="max-width: 600px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@Model.ImageUrl"
+                 class="img-fluid rounded-start"
+                 style="height:200px; object-fit:cover;" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5>@Model.Name</h5>
+                <p>
+                    <strong>Species:</strong> @Model.Species <br />
+                    <strong>Breed:</strong> @Model.BreedDisplay <br />
+                    <strong>Shelter:</strong> @Model.ShelterName
+                </p>
+                <p class="text-danger">
+                    Are you sure you want to delete this animal?
+                </p>
+
+                <form asp-action="DeleteConfirmed" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

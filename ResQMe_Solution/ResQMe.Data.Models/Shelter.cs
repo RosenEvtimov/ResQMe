@@ -9,25 +9,29 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(MaxShelterNameLength, MinimumLength = MinShelterNameLength)]
+        [MaxLength(MaxShelterNameLength)]
         public string Name { get; set; } = null!;
 
         [Required]
-        [StringLength(MaxShelterCityLength, MinimumLength = MinShelterCityLength)]
+        [MaxLength(MaxShelterCityLength)]
         public string City { get; set; } = null!;
 
         [Required]
-        [StringLength(MaxShelterAddressLength, MinimumLength = MinShelterAddressLength)]
+        [MaxLength(MaxShelterAddressLength)]
         public string Address { get; set; } = null!;
 
         [Required]
+        [MaxLength(MaxShelterDescriptionLength)]
+        public string Description { get; set; } = null!;
+
+        [Required]
         [Phone]
-        [StringLength(MaxShelterPhoneLength, MinimumLength = MinShelterPhoneLength)]
+        [MaxLength(MaxShelterPhoneLength)]
         public string Phone { get; set; } = null!;
 
         [Required]
         [EmailAddress]
-        [StringLength(MaxShelterEmailLength, MinimumLength = MinShelterEmailLength)]
+        [MaxLength(MaxShelterEmailLength)]
         public string Email { get; set; } = null!;
 
         public virtual ICollection<Animal> Animals { get; set; } = new List<Animal>();

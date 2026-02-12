@@ -16,20 +16,20 @@
         public virtual Animal Animal { get; set; } = null!;
 
         [Required]
-        [StringLength(MaxAdoptionRequestFirstNameLength, MinimumLength = MinAdoptionRequestFirstNameLength)]
+        [MaxLength(MaxAdoptionRequestFirstNameLength)]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(MaxAdoptionRequestLastNameLength, MinimumLength = MinAdoptionRequestLastNameLength)]
+        [MaxLength(MaxAdoptionRequestLastNameLength)]
         public string LastName { get; set; } = null!;
 
         [EmailAddress]
-        [StringLength(MaxAdoptionRequestEmailLength, MinimumLength = MinAdoptionRequestEmailLength)]
+        [MaxLength(MaxAdoptionRequestEmailLength)]
         public string? Email { get; set; }
 
         [Required]
         [Phone]
-        [StringLength(MaxAdoptionRequestPhoneLength, MinimumLength = MinAdoptionRequestPhoneLength)]
+        [MaxLength(MaxAdoptionRequestPhoneLength)]
         public string Phone { get; set; } = null!;
 
         [MaxLength(MaxAdoptionRequestMessageLength)]

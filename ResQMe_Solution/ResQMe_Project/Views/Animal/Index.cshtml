@@ -1,0 +1,61 @@
+﻿@using ResQMe.ViewModels.Animal
+
+@model IEnumerable<AnimalListViewModel>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No animals available at the moment.
+    </div>
+}
+
+<div class="row">
+    @foreach (var animal in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@animal.ImageUrl" class="card-img-top animal-image" style="height:200px; object-fit:cover;" />
+
+                <div class="card-body">
+                    <h5>@animal.Name (@animal.Age)</h5>
+
+                    <p>
+                        <strong>Gender:</strong> @animal.Gender <br />
+                        <strong>Breed:</strong> @animal.BreedDisplay <br />
+                        <strong>Species:</strong> @animal.Species <br />
+                        <strong>Shelter:</strong> @animal.Shelter
+                    </p>
+
+                    @if (animal.IsAdopted)
+                    {
+                        <span class="badge bg-danger">Adopted</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Available</span>
+                    }
+
+                    <div class="mt-2">
+                        <a asp-action="Details"
+                           asp-route-id="@animal.Id"
+                           class="btn btn-primary btn-sm">
+                            Details
+                        </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@animal.Id"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@animal.Id"
+                           class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -30,6 +30,8 @@
         public const int MinShelterAddressLength = 5;
         public const int MaxShelterAddressLength = 150;
 
+        public const int MaxShelterDescriptionLength = 750;
+
         public const int MinShelterPhoneLength = 7;
         public const int MaxShelterPhoneLength = 20;
 

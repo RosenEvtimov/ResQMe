@@ -1,0 +1,143 @@
+﻿@model ResQMe.ViewModels.Animal.AnimalFormViewModel
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using ResQMe.Data.Models.Enums
+
+<h2 class="mb-4">Edit Animal</h2>
+
+<form asp-action="Edit" method="post">
+
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Age</label>
+        <input asp-for="Age" class="form-control" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Gender</label>
+        <select asp-for="Gender"
+                asp-items="Html.GetEnumSelectList<Gender>()"
+                class="form-control">
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Species</label>
+        <select asp-for="SpeciesId"
+                asp-items="@(new SelectList(Model.Species, "Id", "Name"))"
+                class="form-control">
+            <option value="">-- Select Species --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Breed Type</label>
+        <select asp-for="BreedType"
+                asp-items="Html.GetEnumSelectList<BreedType>()"
+                class="form-control">
+            <option value="">-- Select Breed Type --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Breed</label>
+        <select asp-for="BreedId"
+                id="breedSelect"
+                class="form-control"
+                disabled>
+        </select>
+        <span class="form-text">
+            Only required if Breed Type is Purebred.
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Image URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsAdopted" class="form-check-input" />
+        <label asp-for="IsAdopted" class="form-check-label">
+            Mark as Adopted
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Shelter</label>
+        <select asp-for="ShelterId"
+                asp-items="@(new SelectList(Model.Shelters, "Id", "Name"))"
+                class="form-control">
+            <option value="">-- Select Shelter --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const speciesSelect = document.getElementById("SpeciesId");
+        const breedTypeSelect = document.getElementById("BreedType");
+        const breedSelect = document.getElementById("breedSelect");
+
+        function loadBreeds(speciesId) {
+            fetch(`/Animal/GetBreeds?speciesId=${speciesId}`)
+                .then(response => response.json())
+                .then(data => {
+                    breedSelect.innerHTML = "";
+
+                    data.forEach(breed => {
+                        const option = document.createElement("option");
+                        option.value = breed.id;
+                        option.text = breed.name;
+                        breedSelect.appendChild(option);
+                    });
+                });
+        }
+
+        breedTypeSelect.addEventListener("change", function () {
+
+            /* Purebred = 0 (because enum value is 0) */
+            if (this.value === "0") {
+                breedSelect.disabled = false;
+                loadBreeds(speciesSelect.value);
+            }
+            else {
+                breedSelect.disabled = true;
+                breedSelect.innerHTML = "";
+            }
+        });
+
+        speciesSelect.addEventListener("change", function () {
+
+            /* Only reload breeds if BreedType is Purebred */
+            if (breedTypeSelect.value === "0") {
+                loadBreeds(this.value);
+            }
+        });
+
+    </script>
+}
