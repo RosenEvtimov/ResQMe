@@ -1,7 +1,7 @@
-﻿using ResQMe.Data.Models.Enums;
-
-namespace ResQMe.ViewModels.Animal
+﻿namespace ResQMe.ViewModels.Animal
 {
+    using ResQMe.Data.Models.Enums;
+
     public class AnimalDetailsViewModel
     {
         public int Id { get; set; }
