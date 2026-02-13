@@ -27,6 +27,7 @@ namespace ResQMe_Project
 
             /* My Services DI */
             builder.Services.AddScoped<IAnimalService, AnimalService>();
+            builder.Services.AddScoped<IShelterService, ShelterService>();
 
             WebApplication app = builder.Build();
 

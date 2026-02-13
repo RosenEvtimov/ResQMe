@@ -25,6 +25,10 @@
         public string Description { get; set; } = null!;
 
         [Required]
+        [Url]
+        public string ImageUrl { get; set; } = null!;
+
+        [Required]
         [Phone]
         [MaxLength(MaxShelterPhoneLength)]
         public string Phone { get; set; } = null!;

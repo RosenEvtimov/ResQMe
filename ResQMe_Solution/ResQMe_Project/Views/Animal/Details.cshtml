@@ -44,9 +44,22 @@
                 <strong>Email:</strong> @Model.ShelterEmail
             </p>
 
-            <a asp-action="Index" class="btn btn-secondary mt-3">
-                Back to list
-            </a>
+            @if (ViewBag.FromShelterId != null)
+            {
+                <a asp-controller="Shelter"
+                   asp-action="Details"
+                   asp-route-id="@ViewBag.FromShelterId"
+                   class="btn btn-secondary mt-3">
+                    Back to Shelter Details
+                </a>
+            }
+            else
+            {
+                <a asp-action="Index"
+                   class="btn btn-secondary mt-3">
+                    Back to All Animals
+                </a>
+            }
         </div>
 
     </div>

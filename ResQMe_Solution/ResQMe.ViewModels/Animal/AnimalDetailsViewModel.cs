@@ -22,7 +22,7 @@
 
         public bool IsAdopted { get; set; }
 
-        // Shelter info
+        /* Shelter info */
         public string ShelterName { get; set; } = null!;
         public string ShelterCity { get; set; } = null!;
         public string ShelterAddress { get; set; } = null!;

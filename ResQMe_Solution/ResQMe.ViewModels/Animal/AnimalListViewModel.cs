@@ -1,4 +1,6 @@
-﻿namespace ResQMe.ViewModels.Animal
+﻿using ResQMe.Data.Models.Enums;
+
+namespace ResQMe.ViewModels.Animal
 {
     public class AnimalListViewModel
     {
@@ -8,7 +10,7 @@
 
         public int Age { get; set; }
 
-        public string Gender { get; set; } = null!;
+        public Gender Gender { get; set; }
 
         public string Species { get; set; } = null!;
 

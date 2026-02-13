@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResQMe.Data;
 
@@ -11,9 +12,11 @@ using ResQMe.Data;
 namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260213155209_AddShelterImages")]
+    partial class AddShelterImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -629,7 +632,7 @@ namespace ResQMe.Data.Migrations
                             City = "Burgas",
                             Description = "Volunteer-run shelter dedicated to rescuing abandoned animals in Burgas.",
                             Email = "furryfriends@gmail.com",
-                            ImageUrl = "https://i.ibb.co/Hf3QV5Kx/Furry-Friends-Refuge-AI.png",
+                            ImageUrl = "https://ibb.co/DHTnt018",
                             Name = "Furry Friends Refuge",
                             Phone = "056111222"
                         },
@@ -640,7 +643,7 @@ namespace ResQMe.Data.Migrations
                             City = "Burgas",
                             Description = "Non-profit organisation dedicated to fostering homeless animals in Burgas.",
                             Email = "safepaws@gmail.com",
-                            ImageUrl = "https://i.ibb.co/dsSj025K/Safe-Paws-AI.png",
+                            ImageUrl = "https://ibb.co/9mJc9TrY",
                             Name = "Safe Paws",
                             Phone = "056333444"
                         });

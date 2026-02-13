@@ -19,58 +19,21 @@
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var animals = await animalService.GetAllAnimalsAsync();
-
-            var model = animals.Select(a => new AnimalListViewModel
-            {
-                Id = a.Id,
-                Name = a.Name,
-                Age = a.Age,
-                Gender = a.Gender.ToString(),
-                // Display breed name if purebred, otherwise display breed type
-                BreedDisplay = a.BreedType == BreedType.Purebred && a.Breed != null
-                    ? a.Breed.Name
-                    : a.BreedType.ToString(),
-                Species = a.Species.Name,
-                Shelter = a.Shelter.Name,
-                IsAdopted = a.IsAdopted,
-                ImageUrl = a.ImageUrl
-            });
-
+            var model = await animalService.GetAllAnimalsAsync();
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, int? fromShelterId)
         {
-            var animal = await animalService.GetAnimalByIdAsync(id);
+            var model = await animalService.GetAnimalDetailsAsync(id);
 
-            if (animal == null)
+            if (model == null)
             {
                 return NotFound();
             }
 
-            var model = new AnimalDetailsViewModel
-            {
-                Id = animal.Id,
-                Name = animal.Name,
-                Age = animal.Age,
-                Gender = animal.Gender,
-                Description = animal.Description,
-                ImageUrl = animal.ImageUrl,
-                IsAdopted = animal.IsAdopted,
-                // Display breed name if purebred, otherwise display breed type
-                BreedDisplay = animal.BreedType == BreedType.Purebred && animal.Breed != null
-                    ? animal.Breed.Name
-                    : animal.BreedType.ToString(),
-                Species = animal.Species.Name,
-
-                ShelterName = animal.Shelter.Name,
-                ShelterCity = animal.Shelter.City,
-                ShelterAddress = animal.Shelter.Address,
-                ShelterPhone = animal.Shelter.Phone,
-                ShelterEmail = animal.Shelter.Email
-            };
+            ViewBag.FromShelterId = fromShelterId;
 
             return View(model);
         }
@@ -96,6 +59,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AnimalFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -113,23 +77,7 @@
                 return View(model);
             }
 
-            var animal = new Animal
-            {
-                Name = model.Name,
-                Age = model.Age,
-                Gender = model.Gender,
-                SpeciesId = model.SpeciesId!.Value,
-                BreedType = model.BreedType!.Value,
-                BreedId = model.BreedType == BreedType.Purebred
-                    ? model.BreedId
-                    : null,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl,
-                ShelterId = model.ShelterId!.Value,
-                IsAdopted = false
-            };
-
-            await animalService.AddAnimalAsync(animal);
+            await animalService.AddAnimalAsync(model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -137,26 +85,12 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var animal = await animalService.GetAnimalByIdAsync(id);
+            var model = await animalService.GetAnimalForEditAsync(id);
 
-            if (animal == null)
+            if (model == null)
             {
                 return NotFound();
             }
-
-            var model = new AnimalFormViewModel
-            {
-                Name = animal.Name,
-                Age = animal.Age,
-                Gender = animal.Gender,
-                SpeciesId = animal.SpeciesId,
-                BreedType = animal.BreedType,
-                BreedId = animal.BreedId,
-                Description = animal.Description,
-                ImageUrl = animal.ImageUrl,
-                IsAdopted = animal.IsAdopted,
-                ShelterId = animal.ShelterId
-            };
 
             model.Species = await animalService.GetSpeciesForDropdownAsync();
             model.Shelters = await animalService.GetSheltersForDropdownAsync();
@@ -170,6 +104,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, AnimalFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -185,27 +120,7 @@
                 return View(model);
             }
 
-            var animal = await animalService.GetAnimalByIdAsync(id);
-
-            if (animal == null)
-            {
-                return NotFound();
-            }
-
-            animal.Name = model.Name;
-            animal.Age = model.Age;
-            animal.Gender = model.Gender;
-            animal.SpeciesId = model.SpeciesId!.Value;
-            animal.BreedType = model.BreedType!.Value;
-            animal.BreedId = model.BreedType == BreedType.Purebred
-                ? model.BreedId
-                : null;
-            animal.Description = model.Description;
-            animal.ImageUrl = model.ImageUrl;
-            animal.IsAdopted = model.IsAdopted;
-            animal.ShelterId = model.ShelterId!.Value;
-
-            await animalService.EditAnimalAsync(animal);
+            await animalService.EditAnimalAsync(id, model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -213,27 +128,12 @@
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var animal = await animalService.GetAnimalByIdAsync(id);
+            var model = await animalService.GetAnimalDetailsAsync(id);
 
-            if (animal == null)
+            if (model == null)
             {
                 return NotFound();
             }
-
-            var model = new AnimalDetailsViewModel
-            {
-                Id = animal.Id,
-                Name = animal.Name,
-                Age = animal.Age,
-                Gender = animal.Gender,
-                BreedDisplay = animal.BreedType == BreedType.Purebred && animal.Breed != null
-                    ? animal.Breed.Name
-                    : animal.BreedType.ToString(),
-                Species = animal.Species.Name,
-                ShelterName = animal.Shelter.Name,
-                IsAdopted = animal.IsAdopted,
-                ImageUrl = animal.ImageUrl
-            };
 
             return View(model);
         }

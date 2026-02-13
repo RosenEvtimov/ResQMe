@@ -1,17 +1,20 @@
 ﻿namespace ResQMe.Services.Core.Interfaces
 {
     using ResQMe.Data.Models;
+    using ResQMe.ViewModels.Animal;
     using ResQMe.ViewModels.Common;
 
     public interface IAnimalService
     {
-        Task<IEnumerable<Animal>> GetAllAnimalsAsync();
+        Task<IEnumerable<AnimalListViewModel>> GetAllAnimalsAsync();
 
-        Task<Animal?> GetAnimalByIdAsync(int id);
+        Task<AnimalDetailsViewModel?> GetAnimalDetailsAsync(int id);
 
-        Task AddAnimalAsync(Animal model);
+        Task<AnimalFormViewModel?> GetAnimalForEditAsync(int id);
 
-        Task EditAnimalAsync(Animal model);
+        Task AddAnimalAsync(AnimalFormViewModel model);
+
+        Task EditAnimalAsync(int id, AnimalFormViewModel model);
 
         Task DeleteAnimalAsync(int id);
 

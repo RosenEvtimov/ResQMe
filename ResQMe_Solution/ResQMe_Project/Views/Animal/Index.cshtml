@@ -2,12 +2,16 @@
 
 @model IEnumerable<AnimalListViewModel>
 
+<h2 class="mb-4">Our Animals</h2>
+
 @if (!Model.Any())
 {
     <div class="alert alert-info">
         No animals available at the moment.
     </div>
 }
+
+<a asp-action="Add" class="btn btn-success mb-3">Add Animal</a>
 
 <div class="row">
     @foreach (var animal in Model)

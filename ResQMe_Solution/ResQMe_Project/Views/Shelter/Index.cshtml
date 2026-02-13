@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ResQMe.ViewModels.Shelter.ShelterListViewModel>
+
+<h2 class="mb-4">Our Shelters</h2>
+
+<a asp-action="Add" class="btn btn-success mb-3">Add Shelter</a>
+
+<div class="row">
+    @foreach (var shelter in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@shelter.ImageUrl"
+                     class="card-img-top"
+                     style="height:200px; object-fit:cover;" />
+
+                <div class="card-body">
+                    <h5>@shelter.Name</h5>
+                    <p>@shelter.City</p>
+
+                    <a asp-action="Details"
+                       asp-route-id="@shelter.Id"
+                       class="btn btn-primary btn-sm">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@shelter.Id"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@shelter.Id"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
