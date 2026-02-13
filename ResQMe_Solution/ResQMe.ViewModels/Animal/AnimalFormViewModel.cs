@@ -7,6 +7,8 @@
 
     public class AnimalFormViewModel
     {
+        public int Id { get; set; } 
+
         [Required]
         [StringLength(MaxAnimalNameLength, MinimumLength = MinAnimalNameLength)]
         public string Name { get; set; } = null!;

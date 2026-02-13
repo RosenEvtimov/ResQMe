@@ -76,6 +76,7 @@
                 .Where(a => a.Id == id)
                 .Select(a => new AnimalFormViewModel
                 {
+                    Id = a.Id,
                     Name = a.Name,
                     Age = a.Age,
                     Gender = a.Gender,
@@ -113,9 +114,9 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task EditAnimalAsync(int id, AnimalFormViewModel model)
+        public async Task EditAnimalAsync(AnimalFormViewModel model)
         {
-            var animal = await context.Animals.FindAsync(id);
+            var animal = await context.Animals.FindAsync(model.Id);
 
             if (animal == null)
                 return;
@@ -136,9 +137,9 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteAnimalAsync(int id)
+        public async Task DeleteAnimalAsync(AnimalDetailsViewModel model)
         {
-            var animal = await context.Animals.FindAsync(id);
+            var animal = await context.Animals.FindAsync(model.Id);
 
             if (animal != null)
             {

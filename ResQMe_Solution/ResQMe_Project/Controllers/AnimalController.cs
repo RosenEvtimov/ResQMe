@@ -105,7 +105,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, AnimalFormViewModel model)
+        public async Task<IActionResult> Edit(AnimalFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -120,7 +120,7 @@
                 return View(model);
             }
 
-            await animalService.EditAnimalAsync(id, model);
+            await animalService.EditAnimalAsync(model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -140,9 +140,9 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(AnimalDetailsViewModel model)
         {
-            await animalService.DeleteAnimalAsync(id);
+            await animalService.DeleteAnimalAsync(model);
 
             return RedirectToAction(nameof(Index));
         }

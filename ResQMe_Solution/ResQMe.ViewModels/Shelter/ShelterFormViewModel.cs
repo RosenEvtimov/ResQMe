@@ -5,6 +5,8 @@
 
     public class ShelterFormViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(MaxShelterNameLength, MinimumLength = MinShelterNameLength)]
         public string Name { get; set; } = null!;

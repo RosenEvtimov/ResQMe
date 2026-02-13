@@ -1,6 +1,5 @@
 ﻿namespace ResQMe.Services.Core.Interfaces
 {
-    using ResQMe.Data.Models;
     using ResQMe.ViewModels.Animal;
     using ResQMe.ViewModels.Common;
 
@@ -14,9 +13,9 @@
 
         Task AddAnimalAsync(AnimalFormViewModel model);
 
-        Task EditAnimalAsync(int id, AnimalFormViewModel model);
+        Task EditAnimalAsync(AnimalFormViewModel model);
 
-        Task DeleteAnimalAsync(int id);
+        Task DeleteAnimalAsync(AnimalDetailsViewModel model);
 
         /* Creating Dropdown Support */
         Task<IEnumerable<DropdownItemViewModel>> GetSpeciesForDropdownAsync();
