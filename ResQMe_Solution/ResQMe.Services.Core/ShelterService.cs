@@ -62,6 +62,7 @@
                 .Where(s => s.Id == id)
                 .Select(s => new ShelterFormViewModel
                 {
+                    Id= s.Id,
                     Name = s.Name,
                     City = s.City,
                     Address = s.Address,
@@ -90,9 +91,9 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task EditShelterAsync(int id, ShelterFormViewModel model)
+        public async Task EditShelterAsync(ShelterFormViewModel model)
         {
-            var shelter = await context.Shelters.FindAsync(id);
+            var shelter = await context.Shelters.FindAsync(model.Id);
 
             if (shelter == null)
                 return;
@@ -108,15 +109,23 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteShelterAsync(int id)
+        public async Task<bool> DeleteShelterAsync(int id)
         {
             var shelter = await context.Shelters.FindAsync(id);
 
-            if (shelter != null)
-            {
-                context.Shelters.Remove(shelter);
-                await context.SaveChangesAsync();
-            }
+            if (shelter == null)
+                return false;
+
+            bool hasAnimals = await context.Animals
+                .AnyAsync(a => a.ShelterId == id);
+
+            if (hasAnimals)
+                return false;
+
+            context.Shelters.Remove(shelter);
+            await context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

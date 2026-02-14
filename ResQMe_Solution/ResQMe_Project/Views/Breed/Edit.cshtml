@@ -1,0 +1,36 @@
+﻿@model ResQMe.ViewModels.Breed.BreedFormViewModel
+
+<h2>Edit Breed</h2>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Species</label>
+        <select asp-for="SpeciesId"
+                asp-items="@(new SelectList(Model.Species, "Id", "Name"))"
+                class="form-control">
+            <option value="">-- Select Species --</option>
+        </select>
+        <span asp-validation-for="SpeciesId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Save Changes
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancel
+    </a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,22 @@
+﻿@model ResQMe.ViewModels.Breed.BreedFormViewModel
+
+<h2 class="text-danger">Delete Breed</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<p>
+    Are you sure you want to delete
+    <strong>@Model.Name</strong>?
+</p>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger">
+        Delete
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancel
+    </a>
+</form>

@@ -55,14 +55,14 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SpeciesFormViewModel model)
+        public async Task<IActionResult> Edit(SpeciesFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            await speciesService.EditSpeciesAsync(id, model);
+            await speciesService.EditSpeciesAsync(model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -89,7 +89,7 @@
             if (!deleted)
             {
                 ModelState.AddModelError("",
-                    "Cannot delete this species because there are animals assigned to it.");
+                    "You cannot delete these species, because there are animals assigned to it.");
 
                 var model = await speciesService.GetSpeciesForEditAsync(id);
                 return View("Delete", model);

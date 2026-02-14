@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ResQMe.ViewModels.Breed.BreedListViewModel>
+
+<h2 class="mb-4">Breeds</h2>
+
+<a asp-action="Add" class="btn btn-success mb-3">
+    Add Breed
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Species</th>
+            <th style="width:200px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var breed in Model)
+        {
+            <tr>
+                <td>@breed.Name</td>
+                <td>@breed.SpeciesName</td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@breed.Id"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@breed.Id"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

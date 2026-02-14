@@ -12,9 +12,8 @@
 
         Task AddShelterAsync(ShelterFormViewModel model);
 
-        Task EditShelterAsync(int id, ShelterFormViewModel model);
+        Task EditShelterAsync(ShelterFormViewModel model);
 
-        Task DeleteShelterAsync(int id);
+        Task<bool> DeleteShelterAsync(int id);
     }
-
 }

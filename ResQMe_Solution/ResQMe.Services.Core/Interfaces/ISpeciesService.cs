@@ -10,7 +10,7 @@
 
         Task AddSpeciesAsync(SpeciesFormViewModel model);
 
-        Task EditSpeciesAsync(int id, SpeciesFormViewModel model);
+        Task EditSpeciesAsync(SpeciesFormViewModel model);
 
         Task<bool> DeleteSpeciesAsync(int id);
     }

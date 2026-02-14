@@ -32,6 +32,7 @@
                 .Where(s => s.Id == id)
                 .Select(s => new SpeciesFormViewModel
                 {
+                    Id = s.Id,
                     Name = s.Name
                 })
                 .FirstOrDefaultAsync();
@@ -48,9 +49,9 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task EditSpeciesAsync(int id, SpeciesFormViewModel model)
+        public async Task EditSpeciesAsync(SpeciesFormViewModel model)
         {
-            var species = await context.Species.FindAsync(id);
+            var species = await context.Species.FindAsync(model.Id);
 
             if (species == null)
                 return;

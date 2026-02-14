@@ -2,53 +2,46 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Services.Core.Interfaces;
-    using ResQMe.ViewModels.Shelter;
+    using ResQMe.ViewModels.Breed;
 
-    public class ShelterController : Controller
+    public class BreedController : Controller
     {
-        private readonly IShelterService shelterService;
+        private readonly IBreedService breedService;
 
-        public ShelterController(IShelterService shelterService)
+        public BreedController(IBreedService breedService)
         {
-            this.shelterService = shelterService;
+            this.breedService = breedService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await shelterService.GetAllSheltersAsync();
+            var model = await breedService.GetAllBreedsAsync();
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Add()
         {
-            var model = await shelterService.GetShelterDetailsAsync(id);
-
-            if (model == null)
+            var model = new BreedFormViewModel
             {
-                return NotFound();
-            }
+                Species = await breedService.GetSpeciesForDropdownAsync()
+            };
 
             return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult Add()
-        {
-            return View(new ShelterFormViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(ShelterFormViewModel model)
+        public async Task<IActionResult> Add(BreedFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                model.Species = await breedService.GetSpeciesForDropdownAsync();
                 return View(model);
             }
 
-            await shelterService.AddShelterAsync(model);
+            await breedService.AddBreedAsync(model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -56,26 +49,27 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await shelterService.GetShelterForEditAsync(id);
+            var model = await breedService.GetBreedForEditAsync(id);
 
             if (model == null)
-            {
                 return NotFound();
-            }
+
+            model.Species = await breedService.GetSpeciesForDropdownAsync();
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ShelterFormViewModel model)
+        public async Task<IActionResult> Edit(BreedFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                model.Species = await breedService.GetSpeciesForDropdownAsync();
                 return View(model);
             }
 
-            await shelterService.EditShelterAsync(model);
+            await breedService.EditBreedAsync(model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -83,12 +77,10 @@
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var model = await shelterService.GetShelterDetailsAsync(id);
+            var model = await breedService.GetBreedForEditAsync(id);
 
             if (model == null)
-            {
                 return NotFound();
-            }
 
             return View(model);
         }
@@ -97,18 +89,14 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            bool deleted = await shelterService.DeleteShelterAsync(id);
+            bool deleted = await breedService.DeleteBreedAsync(id);
 
             if (!deleted)
             {
-                var model = await shelterService.GetShelterDetailsAsync(id);
-
-                if (model == null)
-                    return NotFound();
-
                 ModelState.AddModelError("",
-                    "You cannot delete this shelter, because it still has animals assigned to it.");
+                    "You cannot delete this breed, because there are animals assigned to it.");
 
+                var model = await breedService.GetBreedForEditAsync(id);
                 return View("Delete", model);
             }
 
