@@ -1,5 +1,6 @@
 ﻿namespace ResQMe_Project.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Data.Models;
     using ResQMe.Data.Models.Enums;
@@ -7,6 +8,7 @@
     using ResQMe.ViewModels.Animal;
     using ResQMe.ViewModels.Common;
 
+    [Authorize(Roles = "Admin")]
     public class AnimalController : Controller
     {
         private readonly IAnimalService animalService;

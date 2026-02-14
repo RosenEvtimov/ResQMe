@@ -1,10 +1,12 @@
 ﻿namespace ResQMe.Data
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using ResQMe.Data.Models;
+    using ResQMe.Data.Models.Identity;
 
-    public class ResQMeDbContext : IdentityDbContext
+    public class ResQMeDbContext : IdentityDbContext<ApplicationUser>
     {
         public ResQMeDbContext(DbContextOptions<ResQMeDbContext> options)
             : base(options)

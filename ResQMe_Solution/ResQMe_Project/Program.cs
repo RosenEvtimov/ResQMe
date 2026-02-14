@@ -3,12 +3,13 @@ namespace ResQMe_Project
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using ResQMe.Data;
+    using ResQMe.Data.Models.Identity;
     using ResQMe.Services.Core;
     using ResQMe.Services.Core.Interfaces;
 
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +22,10 @@ namespace ResQMe_Project
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             /* Identity DI */
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ResQMeDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             /* My Services DI */
@@ -58,6 +61,41 @@ namespace ResQMe_Project
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            /* Seeding Roles and an Admin Account */
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+
+                string[] roles = { "Admin", "User" };
+
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                }
+
+                string adminEmail = "admin@admin.com";
+                string adminPassword = "Admin123!";
+
+                var admin = await userManager.FindByEmailAsync(adminEmail);
+
+                if (admin == null)
+                {
+                    var user = new ApplicationUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
 
             app.Run();
         }
