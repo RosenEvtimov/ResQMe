@@ -40,18 +40,19 @@
         public const int MaxShelterEmailLength = 40;
 
         /* AdoptionRequest */
-        public const int MinAdoptionRequestFirstNameLength = 1;
-        public const int MaxAdoptionRequestFirstNameLength = 40;
-
-        public const int MinAdoptionRequestLastNameLength = 1;
-        public const int MaxAdoptionRequestLastNameLength = 40;
-
-        public const int MinAdoptionRequestEmailLength = 3;
-        public const int MaxAdoptionRequestEmailLength = 40;
-
-        public const int MinAdoptionRequestPhoneLength = 7;
-        public const int MaxAdoptionRequestPhoneLength = 20;
-
         public const int MaxAdoptionRequestMessageLength = 500;
+
+        /* ApplicationUser */
+        public const int MinUserFirstNameLength = 1;
+        public const int MaxUserFirstNameLength = 40;
+
+        public const int MinUserLastNameLength = 1;
+        public const int MaxUserLastNameLength = 40;
+
+        public const int MinUserAddressLength = 5;
+        public const int MaxUserAddressLength = 150;
+
+        public const int MinUserCityLength = 1;
+        public const int MaxUserCityLength = 60;
     }
 }

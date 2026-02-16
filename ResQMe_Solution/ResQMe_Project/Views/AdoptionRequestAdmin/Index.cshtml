@@ -1,0 +1,45 @@
+﻿@using ResQMe.ViewModels.AdoptionRequest
+@model IEnumerable<AdoptionRequestAdminListViewModel>
+
+<h2>All Adoption Requests</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No adoption requests found.
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Animal</th>
+                <th>Applicant</th>
+                <th>City</th>
+                <th>Created On</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.AnimalName</td>
+                    <td>@request.ApplicantFullName</td>
+                    <td>@request.City</td>
+                    <td>@request.CreatedOn.ToString("g")</td>
+                    <td>@request.Status</td>
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-id="@request.Id"
+                           class="btn btn-sm btn-primary">
+                            Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

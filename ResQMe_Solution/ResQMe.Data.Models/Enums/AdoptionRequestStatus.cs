@@ -1,6 +1,6 @@
 ﻿namespace ResQMe.Data.Models.Enums
 {
-    public enum AdoptionStatus
+    public enum AdoptionRequestStatus
     {
         Pending,
         Approved,

@@ -1,5 +1,6 @@
 namespace ResQMe_Project
 {
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using ResQMe.Data;
@@ -26,6 +27,12 @@ namespace ResQMe_Project
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ResQMeDbContext>();
 
+            /* Optional setting for unique email - might remove later */
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            });
+
             builder.Services.AddControllersWithViews();
 
             /* My Services DI */
@@ -33,6 +40,7 @@ namespace ResQMe_Project
             builder.Services.AddScoped<IShelterService, ShelterService>();
             builder.Services.AddScoped<ISpeciesService, SpeciesService>();
             builder.Services.AddScoped<IBreedService, BreedService>();
+            builder.Services.AddScoped<IAdoptionRequestService, AdoptionRequestService>();
 
             WebApplication app = builder.Build();
 
@@ -55,6 +63,31 @@ namespace ResQMe_Project
 
             /* Allows us to use the default Authorization of Identity */
             app.UseAuthentication();
+
+            /* Middleware to assign User role if missing */
+            app.Use(async (context, next) =>
+            {
+                if (context.User.Identity?.IsAuthenticated == true)
+                {
+                    var userManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+                    var signInManager = context.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
+
+                    var user = await userManager.GetUserAsync(context.User);
+
+                    if (user != null)
+                    {
+                        var roles = await userManager.GetRolesAsync(user);
+                        if (!roles.Any())
+                        {
+                            await userManager.AddToRoleAsync(user, "User");
+                            await signInManager.RefreshSignInAsync(user);
+                        }
+                    }
+                }
+
+                await next();
+            });
+
             app.UseAuthorization();
 
             app.MapControllerRoute(

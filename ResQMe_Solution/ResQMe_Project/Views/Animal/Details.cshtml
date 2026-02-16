@@ -60,6 +60,25 @@
                     Back to All Animals
                 </a>
             }
+
+            @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("User") && !Model.IsAdopted)
+            {
+                if (ViewBag.HasAlreadyRequested != null && (bool)ViewBag.HasAlreadyRequested)
+                {
+                    <div class="alert alert-warning mt-3">
+                        You have already submitted an adoption request for this animal.
+                    </div>
+                }
+                else
+                {
+                    <a asp-controller="AdoptionRequest"
+                       asp-action="Create"
+                       asp-route-animalId="@Model.Id"
+                       class="btn btn-success mt-3">
+                        Adopt Me
+                    </a>
+                }
+            }
         </div>
 
     </div>

@@ -1,0 +1,27 @@
+﻿@model ResQMe.ViewModels.User.ProfileFormViewModel
+
+<h2>My Profile</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+
+        <p><strong>First Name:</strong> @Model.FirstName</p>
+        <p><strong>Last Name:</strong> @Model.LastName</p>
+        <p><strong>Address:</strong> @Model.Address</p>
+        <p><strong>City:</strong> @Model.City</p>
+        <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+
+        <a asp-action="Edit" class="btn btn-primary mt-3">
+            Edit Profile
+        </a>
+
+    </div>
+</div>

@@ -1,9 +1,10 @@
 ﻿namespace ResQMe.Data.Models
 {
+    using Models.Enums;
+    using ResQMe.Data.Models.Identity;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using static ResQMe.GCommon.EntityValidation;
-    using Models.Enums;
 
     public class AdoptionRequest
     {
@@ -15,25 +16,14 @@
         public int AnimalId { get; set; }
         public virtual Animal Animal { get; set; } = null!;
 
+        /* Link to logged in User */
         [Required]
-        [MaxLength(MaxAdoptionRequestFirstNameLength)]
-        public string FirstName { get; set; } = null!;
-
-        [Required]
-        [MaxLength(MaxAdoptionRequestLastNameLength)]
-        public string LastName { get; set; } = null!;
-
-        [EmailAddress]
-        [MaxLength(MaxAdoptionRequestEmailLength)]
-        public string? Email { get; set; }
-
-        [Required]
-        [Phone]
-        [MaxLength(MaxAdoptionRequestPhoneLength)]
-        public string Phone { get; set; } = null!;
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
 
         [MaxLength(MaxAdoptionRequestMessageLength)]
-        public string? Message { get; set; }  // message FROM user
+        public string? Message { get; set; }
 
         [Required]
         public PreviousAdoptionExperience PreviousAdoptionExperience { get; set; }
@@ -41,6 +31,6 @@
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public AdoptionStatus Status { get; set; } = AdoptionStatus.Pending;
+        public AdoptionRequestStatus Status { get; set; } = AdoptionRequestStatus.Pending;
     }
 }

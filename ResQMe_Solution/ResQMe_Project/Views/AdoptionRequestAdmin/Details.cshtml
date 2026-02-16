@@ -1,0 +1,56 @@
+﻿@using ResQMe.ViewModels.AdoptionRequest
+@using ResQMe.Data.Models.Enums
+@model AdoptionRequestAdminDetailsViewModel
+
+<h2>Adoption Request Details</h2>
+
+<div class="card p-4">
+
+    <h4>Animal</h4>
+    <p><strong>@Model.AnimalName</strong></p>
+
+    <hr />
+
+    <h4>Applicant Information</h4>
+    <p>
+        <strong>Name:</strong> @Model.FirstName @Model.LastName <br />
+        <strong>Email:</strong> @Model.Email <br />
+        <strong>Phone:</strong> @Model.PhoneNumber <br />
+        <strong>Address:</strong> @Model.Address <br />
+        <strong>City:</strong> @Model.City
+    </p>
+
+    <hr />
+
+    <h4>Adoption Info</h4>
+    <p>
+        <strong>Previous Experience:</strong> @Model.PreviousAdoptionExperience <br />
+        <strong>Message:</strong> @Model.Message <br />
+        <strong>Created On:</strong> @Model.CreatedOn.ToString("f") <br />
+        <strong>Status:</strong> @Model.Status
+    </p>
+
+    <hr />
+
+    @if (Model.Status == AdoptionRequestStatus.Pending)
+    {
+        <form asp-action="Approve" method="post" class="d-inline">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-success">
+                Approve
+            </button>
+        </form>
+
+        <form asp-action="Reject" method="post" class="d-inline">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">
+                Reject
+            </button>
+        </form>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-3">
+        Back
+    </a>
+
+</div>
