@@ -16,6 +16,7 @@
             this.context = context;
         }
 
+        /* User methods */
         public async Task CreateAdoptionRequestAsync(string userId, AdoptionRequestFormViewModel model)
         {
             /* Check if the user already applied for the current animal */
@@ -31,7 +32,7 @@
             {
                 AnimalId = model.AnimalId,
                 UserId = userId,
-                PreviousAdoptionExperience = model.PreviousAdoptionExperience,
+                PreviousAdoptionExperience = model.PreviousAdoptionExperience!.Value,
                 Message = model.Message
             };
 
@@ -53,11 +54,38 @@
                 .AnyAsync(ar => ar.UserId == userId && ar.AnimalId == animalId);
         }
 
-        public async Task<IEnumerable<AdoptionRequestAdminListViewModel>> GetAllRequestsForAdminAsync()
+        public async Task<IEnumerable<MyAdoptionRequestsViewModel>> GetMyRequestsAsync(string userId)
         {
             return await context.AdoptionRequests
                 .Include(ar => ar.Animal)
+                .Where(ar => ar.UserId == userId)
+                .OrderByDescending(ar => ar.CreatedOn)
+                .Select(ar => new MyAdoptionRequestsViewModel
+                {
+                    Id = ar.Id,
+                    AnimalName = ar.Animal.Name,
+                    AnimalImageUrl = ar.Animal.ImageUrl,
+                    CreatedOn = ar.CreatedOn,
+                    Status = ar.Status
+                })
+                .ToListAsync();
+        }
+
+        /* Admin methods */
+        public async Task<IEnumerable<AdoptionRequestAdminListViewModel>> GetAllRequestsForAdminAsync(AdoptionRequestStatus? status)
+        {
+            var query = context.AdoptionRequests
+                .Include(ar => ar.Animal)
                 .Include(ar => ar.User)
+                .AsQueryable();
+
+            if (status.HasValue)
+            {
+                query = query.Where(ar => ar.Status == status.Value);
+            }
+
+            return await query
+                .OrderBy(ar => ar.CreatedOn)
                 .Select(ar => new AdoptionRequestAdminListViewModel
                 {
                     Id = ar.Id,
@@ -111,6 +139,11 @@
                 return;
             }
 
+            if (request.Animal.IsAdopted)
+            {
+                return;
+            }
+
             /* Mark this request approved */
             request.Status = AdoptionRequestStatus.Approved;
 
@@ -148,6 +181,65 @@
             }
 
             request.Status = AdoptionRequestStatus.Rejected;
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UndoApprovalAsync(int id)
+        {
+            var request = await context.AdoptionRequests
+                .Include(ar => ar.Animal)
+                .FirstOrDefaultAsync(ar => ar.Id == id);
+
+            if (request == null)
+            {
+                return;
+            }
+
+            /* Only allow undo if the request is currently approved */
+            if (request.Status != AdoptionRequestStatus.Approved)
+            {
+                return;
+            }
+
+            /* Set this request back to pending */
+            request.Status = AdoptionRequestStatus.Pending;
+
+            /* Make the animal available again */
+            request.Animal.IsAdopted = false;
+
+            /* Reopen all rejected requests for the same animal */
+            var rejectedRequests = await context.AdoptionRequests
+                .Where(ar => ar.AnimalId == request.AnimalId
+                             && ar.Id != id
+                             && ar.Status == AdoptionRequestStatus.Rejected)
+                .ToListAsync();
+
+            foreach (var rejectedRequest in rejectedRequests)
+            {
+                rejectedRequest.Status = AdoptionRequestStatus.Pending;
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UndoRejectionAsync(int id)
+        {
+            var request = await context.AdoptionRequests
+                .Include(ar => ar.Animal)
+                .FirstOrDefaultAsync(ar => ar.Id == id);
+
+            if (request == null)
+            {
+                return;
+            }
+
+            if (request.Status != AdoptionRequestStatus.Rejected)
+            {
+                return;
+            }
+
+            request.Status = AdoptionRequestStatus.Pending;
 
             await context.SaveChangesAsync();
         }

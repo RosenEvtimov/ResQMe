@@ -1,11 +1,12 @@
 ﻿namespace ResQMe_Project.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using ResQMe.Data.Models.Identity;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.Animal;
     using ResQMe.ViewModels.Common;
-    using Microsoft.AspNetCore.Identity;
-    using ResQMe.Data.Models.Identity;
 
     public class AnimalController : Controller
     {
@@ -60,6 +61,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add()
         {
             var model = new AnimalFormViewModel
@@ -73,6 +75,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBreeds(int speciesId)
         {
             var breeds = await animalService.GetBreedsBySpeciesAsync(speciesId);
@@ -81,6 +84,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(AnimalFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -104,6 +108,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await animalService.GetAnimalForEditAsync(id);
@@ -126,6 +131,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(AnimalFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -147,6 +153,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var model = await animalService.GetAnimalDetailsAsync(id);
@@ -161,9 +168,25 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(AnimalDetailsViewModel model)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await animalService.DeleteAnimalAsync(model);
+            bool deleted = await animalService.DeleteAnimalAsync(id);
+
+            if (!deleted)
+            {
+                var model = await animalService.GetAnimalDetailsAsync(id);
+
+                if (model == null)
+                {
+                    return NotFound();
+                }
+
+                ModelState.AddModelError(string.Empty,
+                    "You cannot delete this animal, because it either has adoption requests or doesn't exist.");
+
+                return View("Delete", model);
+            }
 
             return RedirectToAction(nameof(Index));
         }

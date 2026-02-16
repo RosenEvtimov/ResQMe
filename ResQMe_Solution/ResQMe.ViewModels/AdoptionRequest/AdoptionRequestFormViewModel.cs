@@ -8,7 +8,7 @@
         public int AnimalId { get; set; }
 
         [Required]
-        public PreviousAdoptionExperience PreviousAdoptionExperience { get; set; }
+        public PreviousAdoptionExperience? PreviousAdoptionExperience { get; set; }
 
         [StringLength(500)]
         public string? Message { get; set; }

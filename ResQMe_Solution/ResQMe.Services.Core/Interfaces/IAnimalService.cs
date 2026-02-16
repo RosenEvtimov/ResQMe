@@ -15,7 +15,7 @@
 
         Task EditAnimalAsync(AnimalFormViewModel model);
 
-        Task DeleteAnimalAsync(AnimalDetailsViewModel model);
+        Task<bool> DeleteAnimalAsync(int id);
 
         /* Creating Dropdown Support */
         Task<IEnumerable<DropdownItemViewModel>> GetSpeciesForDropdownAsync();

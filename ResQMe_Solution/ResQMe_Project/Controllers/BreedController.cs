@@ -1,9 +1,11 @@
 ﻿namespace ResQMe_Project.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.Breed;
 
+    [Authorize(Roles = "Admin")]
     public class BreedController : Controller
     {
         private readonly IBreedService breedService;
@@ -60,7 +62,9 @@
             var model = await breedService.GetBreedForEditAsync(id);
 
             if (model == null)
+            {
                 return NotFound();
+            }
 
             model.Species = await breedService.GetSpeciesForDropdownAsync();
 
@@ -96,7 +100,9 @@
             var model = await breedService.GetBreedForEditAsync(id);
 
             if (model == null)
+            {
                 return NotFound();
+            }
 
             return View(model);
         }
@@ -109,10 +115,16 @@
 
             if (!deleted)
             {
-                ModelState.AddModelError("",
+                var model = await breedService.GetBreedForEditAsync(id);
+
+                if (model == null)
+                {
+                    return NotFound();
+                }
+
+                ModelState.AddModelError(string.Empty,
                     "You cannot delete this breed, because there are animals assigned to it.");
 
-                var model = await breedService.GetBreedForEditAsync(id);
                 return View("Delete", model);
             }
 

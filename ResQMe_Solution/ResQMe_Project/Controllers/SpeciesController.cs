@@ -1,9 +1,11 @@
 ﻿namespace ResQMe_Project.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.Species;
 
+    [Authorize(Roles = "Admin")]
     public class SpeciesController : Controller
     {
         private readonly ISpeciesService speciesService;
@@ -102,10 +104,16 @@
 
             if (!deleted)
             {
-                ModelState.AddModelError("",
+                var model = await speciesService.GetSpeciesForEditAsync(id);
+
+                if (model == null)
+                {
+                    return NotFound();
+                }
+
+                ModelState.AddModelError(string.Empty,
                     "You cannot delete this species, because there are animals assigned to it.");
 
-                var model = await speciesService.GetSpeciesForEditAsync(id);
                 return View("Delete", model);
             }
 

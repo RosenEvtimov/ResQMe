@@ -2,7 +2,7 @@
 @using ResQMe.Data.Models.Enums
 @model AdoptionRequestAdminDetailsViewModel
 
-<h2>Adoption Request Details</h2>
+<h2>Adoption request details</h2>
 
 <div class="card p-4">
 
@@ -26,7 +26,7 @@
     <p>
         <strong>Previous Experience:</strong> @Model.PreviousAdoptionExperience <br />
         <strong>Message:</strong> @Model.Message <br />
-        <strong>Created On:</strong> @Model.CreatedOn.ToString("f") <br />
+        <strong>Created On:</strong> @Model.CreatedOn.ToString("dd MMMM yyyy - HH:mm", System.Globalization.CultureInfo.InvariantCulture) <br />
         <strong>Status:</strong> @Model.Status
     </p>
 
@@ -36,6 +36,7 @@
     {
         <form asp-action="Approve" method="post" class="d-inline">
             <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
             <button type="submit" class="btn btn-success">
                 Approve
             </button>
@@ -43,13 +44,37 @@
 
         <form asp-action="Reject" method="post" class="d-inline">
             <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
             <button type="submit" class="btn btn-danger">
                 Reject
             </button>
         </form>
     }
 
-    <a asp-action="Index" class="btn btn-secondary mt-3">
+    @if (Model.Status == AdoptionRequestStatus.Approved)
+    {
+        <form asp-action="UndoApproval" method="post" class="d-inline">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
+            <button type="submit" class="btn btn-warning">
+                Undo Approval
+            </button>
+        </form>
+    }
+    @if (Model.Status == AdoptionRequestStatus.Rejected)
+    {
+        <form asp-action="UndoRejection" method="post" class="d-inline">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
+            <button type="submit" class="btn btn-warning">
+                Undo Rejection
+            </button>
+        </form>
+    }
+
+    <a asp-action="Index" 
+    asp-route-status="@ViewBag.CurrentStatus"  
+    class="btn btn-secondary mt-3">
         Back
     </a>
 

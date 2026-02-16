@@ -1,5 +1,6 @@
 ﻿namespace ResQMe_Project.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.Shelter;
@@ -34,6 +35,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             return View(new ShelterFormViewModel());
@@ -41,6 +43,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(ShelterFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -61,6 +64,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await shelterService.GetShelterForEditAsync(id);
@@ -75,6 +79,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(ShelterFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -95,6 +100,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var model = await shelterService.GetShelterDetailsAsync(id);
@@ -109,6 +115,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             bool deleted = await shelterService.DeleteShelterAsync(id);
@@ -118,9 +125,11 @@
                 var model = await shelterService.GetShelterDetailsAsync(id);
 
                 if (model == null)
+                {
                     return NotFound();
+                }
 
-                ModelState.AddModelError("",
+                ModelState.AddModelError(string.Empty,
                     "You cannot delete this shelter, because it still has animals assigned to it.");
 
                 return View("Delete", model);

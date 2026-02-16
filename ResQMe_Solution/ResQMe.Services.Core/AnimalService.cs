@@ -98,8 +98,8 @@
             var animal = new Animal
             {
                 Name = model.Name,
-                Age = model.Age,
-                Gender = model.Gender,
+                Age = model.Age!.Value,
+                Gender = model.Gender!.Value,
                 SpeciesId = model.SpeciesId!.Value,
                 BreedType = model.BreedType!.Value,
                 BreedId = model.BreedType == BreedType.Purebred
@@ -120,11 +120,13 @@
             var animal = await context.Animals.FindAsync(model.Id);
 
             if (animal == null)
+            {
                 return;
+            }
 
             animal.Name = model.Name;
-            animal.Age = model.Age;
-            animal.Gender = model.Gender;
+            animal.Age = model.Age!.Value;
+            animal.Gender = model.Gender!.Value;
             animal.SpeciesId = model.SpeciesId!.Value;
             animal.BreedType = model.BreedType!.Value;
             animal.BreedId = model.BreedType == BreedType.Purebred
@@ -138,15 +140,27 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteAnimalAsync(AnimalDetailsViewModel model)
+        public async Task<bool> DeleteAnimalAsync(int id)
         {
-            var animal = await context.Animals.FindAsync(model.Id);
+            var animal = await context.Animals.FindAsync(id);
 
-            if (animal != null)
+            if (animal == null)
             {
-                context.Animals.Remove(animal);
-                await context.SaveChangesAsync();
+                return false;
             }
+
+            bool hasRequests = await context.AdoptionRequests
+                .AnyAsync(ar => ar.AnimalId == id);
+
+            if (hasRequests)
+            {
+                return false;
+            }
+
+            context.Animals.Remove(animal);
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
         /* Species Dropdown */

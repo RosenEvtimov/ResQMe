@@ -108,5 +108,20 @@
 
             return RedirectToAction("Details", "Animal", new { id = model.AnimalId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MyRequests()
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = await adoptionRequestService.GetMyRequestsAsync(user.Id);
+
+            return View(model);
+        }
     }
 }

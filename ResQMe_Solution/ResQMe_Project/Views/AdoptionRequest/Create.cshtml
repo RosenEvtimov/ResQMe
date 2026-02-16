@@ -1,20 +1,22 @@
 ﻿@model ResQMe.ViewModels.AdoptionRequest.AdoptionRequestFormViewModel
 
-<h2>Send Adoption Request</h2>
+<h2>Send adoption request</h2>
 
 <form asp-action="Create" method="post">
     <input type="hidden" asp-for="AnimalId" />
 
     <div class="mb-3">
-        <label asp-for="PreviousAdoptionExperience"></label>
+        <label class="form-label">Previous adoption experience</label>
         <select asp-for="PreviousAdoptionExperience"
                 asp-items="Html.GetEnumSelectList<ResQMe.Data.Models.Enums.PreviousAdoptionExperience>()"
                 class="form-control">
+            <option value="">-- Select Experience --</option>
         </select>
+        <span asp-validation-for="PreviousAdoptionExperience" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Message"></label>
+        <label class="form-label" asp-for="Message"></label>
         <textarea asp-for="Message" class="form-control"></textarea>
     </div>
 

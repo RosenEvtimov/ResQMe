@@ -1,6 +1,8 @@
 ﻿@model ResQMe.ViewModels.Animal.AnimalDetailsViewModel
 
-<h2 class="text-danger mb-4">Delete Animal</h2>
+<h2 class="text-danger mb-4">Delete animal</h2>
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
 <div class="card mb-3" style="max-width: 600px;">
     <div class="row g-0">

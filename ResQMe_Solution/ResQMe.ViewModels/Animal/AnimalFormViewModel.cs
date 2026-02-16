@@ -13,11 +13,12 @@
         [StringLength(MaxAnimalNameLength, MinimumLength = MinAnimalNameLength)]
         public string Name { get; set; } = null!;
 
+        [Required]
         [Range(MinAnimalAge, MaxAnimalAge)]
-        public int Age { get; set; }
+        public int? Age { get; set; }
 
         [Required]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [Required]
         public int? SpeciesId { get; set; }

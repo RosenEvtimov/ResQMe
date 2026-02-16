@@ -101,13 +101,17 @@
             var breed = await context.Breeds.FindAsync(id);
 
             if (breed == null)
+            {
                 return false;
+            }
 
             bool hasAnimals = await context.Animals
                 .AnyAsync(a => a.BreedId == id);
 
             if (hasAnimals)
+            {
                 return false;
+            }
 
             context.Breeds.Remove(breed);
             await context.SaveChangesAsync();

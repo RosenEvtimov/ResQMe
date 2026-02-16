@@ -1,12 +1,54 @@
 ﻿@using ResQMe.ViewModels.AdoptionRequest
+@using ResQMe.Data.Models.Enums
 @model IEnumerable<AdoptionRequestAdminListViewModel>
 
-<h2>All Adoption Requests</h2>
+@if (TempData["AdminSuccess"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["AdminSuccess"]
+    </div>
+}
+
+<h2>@ViewBag.CurrentStatus.ToString() adoption requests</h2>
+
+<form method="get" class="mb-3">
+    <select name="status"
+            class="form-select w-auto d-inline"
+            onchange="this.form.submit()">
+
+        <option value="All"
+                selected="@(ViewBag.CurrentStatus?.ToString() == "All")">
+            All
+        </option>
+
+        <option value="Pending"
+                selected="@(ViewBag.CurrentStatus?.ToString() == "Pending")">
+            Pending
+        </option>
+
+        <option value="Approved"
+                selected="@(ViewBag.CurrentStatus?.ToString() == "Approved")">
+            Approved
+        </option>
+
+        <option value="Rejected"
+                selected="@(ViewBag.CurrentStatus?.ToString() == "Rejected")">
+            Rejected
+        </option>
+    </select>
+</form>
 
 @if (!Model.Any())
 {
     <div class="alert alert-info">
-        No adoption requests found.
+        @if (ViewBag.CurrentStatus?.ToString() == "All")
+        {
+            <span>No adoption requests found.</span>
+        }
+        else
+        {
+            <span>No @ViewBag.CurrentStatus.ToString().ToLower() adoption requests found.</span>
+        }
     </div>
 }
 else
@@ -29,17 +71,20 @@ else
                     <td>@request.AnimalName</td>
                     <td>@request.ApplicantFullName</td>
                     <td>@request.City</td>
-                    <td>@request.CreatedOn.ToString("g")</td>
+                    <td>
+                        @request.CreatedOn.ToString("dd MMMM yyyy - HH:mm", System.Globalization.CultureInfo.InvariantCulture)                               
+                    </td>
                     <td>@request.Status</td>
                     <td>
                         <a asp-action="Details"
-                           asp-route-id="@request.Id"
-                           class="btn btn-sm btn-primary">
+                        asp-route-id="@request.Id"
+                        asp-route-status="@ViewBag.CurrentStatus"
+                        class="btn btn-sm btn-primary">
                             Details
                         </a>
                     </td>
                 </tr>
-            }
+                }
         </tbody>
     </table>
 }

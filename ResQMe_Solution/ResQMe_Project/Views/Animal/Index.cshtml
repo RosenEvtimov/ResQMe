@@ -1,8 +1,7 @@
 ﻿@using ResQMe.ViewModels.Animal
-
 @model IEnumerable<AnimalListViewModel>
 
-<h2 class="mb-4">Our Animals</h2>
+<h2 class="mb-4">Our animals</h2>
 
 @if (!Model.Any())
 {
@@ -11,7 +10,10 @@
     </div>
 }
 
-<a asp-action="Add" class="btn btn-success mb-3">Add Animal</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" class="btn btn-success mb-3">Add Animal</a>
+}
 
 <div class="row">
     @foreach (var animal in Model)
@@ -19,17 +21,14 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <img src="@animal.ImageUrl" class="card-img-top animal-image" style="height:200px; object-fit:cover;" />
-
                 <div class="card-body">
                     <h5>@animal.Name (@animal.Age)</h5>
-
                     <p>
                         <strong>Gender:</strong> @animal.Gender <br />
                         <strong>Breed:</strong> @animal.BreedDisplay <br />
                         <strong>Species:</strong> @animal.Species <br />
                         <strong>Shelter:</strong> @animal.Shelter
                     </p>
-
                     @if (animal.IsAdopted)
                     {
                         <span class="badge bg-danger">Adopted</span>
@@ -38,7 +37,6 @@
                     {
                         <span class="badge bg-success">Available</span>
                     }
-
                     <div class="mt-2">
                         <a asp-action="Details"
                            asp-route-id="@animal.Id"
@@ -46,17 +44,19 @@
                             Details
                         </a>
 
-                        <a asp-action="Edit"
-                           asp-route-id="@animal.Id"
-                           class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-
-                        <a asp-action="Delete"
-                           asp-route-id="@animal.Id"
-                           class="btn btn-danger btn-sm">
-                            Delete
-                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit"
+                               asp-route-id="@animal.Id"
+                               class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+                            <a asp-action="Delete"
+                               asp-route-id="@animal.Id"
+                               class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                        }
                     </div>
                 </div>
             </div>

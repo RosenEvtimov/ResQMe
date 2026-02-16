@@ -1,8 +1,12 @@
-﻿@model IEnumerable<ResQMe.ViewModels.Shelter.ShelterListViewModel>
+﻿@using ResQMe.ViewModels.Shelter
+@model IEnumerable<ShelterListViewModel>
 
-<h2 class="mb-4">Our Shelters</h2>
+<h2 class="mb-4">Our shelters</h2>
 
-<a asp-action="Add" class="btn btn-success mb-3">Add Shelter</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" class="btn btn-success mb-3">Add Shelter</a>
+}
 
 <div class="row">
     @foreach (var shelter in Model)
@@ -12,7 +16,6 @@
                 <img src="@shelter.ImageUrl"
                      class="card-img-top"
                      style="height:200px; object-fit:cover;" />
-
                 <div class="card-body">
                     <h5>@shelter.Name</h5>
                     <p>@shelter.City</p>
@@ -23,17 +26,19 @@
                         Details
                     </a>
 
-                    <a asp-action="Edit"
-                       asp-route-id="@shelter.Id"
-                       class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
-
-                    <a asp-action="Delete"
-                       asp-route-id="@shelter.Id"
-                       class="btn btn-danger btn-sm">
-                        Delete
-                    </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit"
+                           asp-route-id="@shelter.Id"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+                        <a asp-action="Delete"
+                           asp-route-id="@shelter.Id"
+                           class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+                    }
                 </div>
             </div>
         </div>
