@@ -23,6 +23,7 @@
                 .Include(a => a.Shelter)
                 .Include(a => a.Breed)
                 .Include(a => a.Species)
+                .OrderBy(a => a.Name)
                 .Select(a => new AnimalListViewModel
                 {
                     Id = a.Id,

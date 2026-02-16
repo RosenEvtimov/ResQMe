@@ -17,6 +17,8 @@
         public async Task<IEnumerable<ShelterListViewModel>> GetAllSheltersAsync()
         {
             return await context.Shelters
+                .OrderBy(s => s.City)
+                .ThenBy(s => s.Name)
                 .Select(s => new ShelterListViewModel
                 {
                     Id = s.Id,

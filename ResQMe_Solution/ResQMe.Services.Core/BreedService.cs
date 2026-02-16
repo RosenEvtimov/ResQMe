@@ -20,6 +20,8 @@
         {
             return await context.Breeds
                 .Include(b => b.Species)
+                .OrderBy(b => b.Species.Name)
+                .ThenBy(b => b.Name)
                 .Select(b => new BreedListViewModel
                 {
                     Id = b.Id,

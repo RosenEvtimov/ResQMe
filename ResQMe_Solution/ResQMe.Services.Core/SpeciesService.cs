@@ -18,6 +18,7 @@
         public async Task<IEnumerable<SpeciesListViewModel>> GetAllSpeciesAsync()
         {
             return await context.Species
+                .OrderBy(s => s.Name)
                 .Select(s => new SpeciesListViewModel
                 {
                     Id = s.Id,
