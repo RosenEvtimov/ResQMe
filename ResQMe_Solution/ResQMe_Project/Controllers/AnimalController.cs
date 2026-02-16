@@ -1,21 +1,23 @@
 ﻿namespace ResQMe_Project.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using ResQMe.Data.Models;
-    using ResQMe.Data.Models.Enums;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.Animal;
     using ResQMe.ViewModels.Common;
+    using Microsoft.AspNetCore.Identity;
+    using ResQMe.Data.Models.Identity;
 
-    [Authorize(Roles = "Admin")]
     public class AnimalController : Controller
     {
         private readonly IAnimalService animalService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IAdoptionRequestService adoptionRequestService;
 
-        public AnimalController(IAnimalService animalService)
+        public AnimalController(IAnimalService animalService, UserManager<ApplicationUser> userManager, IAdoptionRequestService adoptionRequestService)
         {
             this.animalService = animalService;
+            this.userManager = userManager;
+            this.adoptionRequestService = adoptionRequestService;
         }
 
         [HttpGet]
@@ -36,6 +38,23 @@
             }
 
             ViewBag.FromShelterId = fromShelterId;
+
+            if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("User"))
+            {
+                var user = await userManager.GetUserAsync(User);
+
+                if (user != null)
+                {
+                    bool hasAlreadyRequested =
+                        await adoptionRequestService.HasUserAlreadyRequestedAsync(user.Id, id);
+
+                    ViewBag.HasAlreadyRequested = hasAlreadyRequested;
+                }
+            }
+            else
+            {
+                ViewBag.HasAlreadyRequested = false;
+            }
 
             return View(model);
         }
