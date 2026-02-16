@@ -35,9 +35,16 @@
                 return View(model);
             }
 
-            await speciesService.AddSpeciesAsync(model);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await speciesService.AddSpeciesAsync(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -62,9 +69,16 @@
                 return View(model);
             }
 
-            await speciesService.EditSpeciesAsync(model);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await speciesService.EditSpeciesAsync(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -89,7 +103,7 @@
             if (!deleted)
             {
                 ModelState.AddModelError("",
-                    "You cannot delete these species, because there are animals assigned to it.");
+                    "You cannot delete this species, because there are animals assigned to it.");
 
                 var model = await speciesService.GetSpeciesForEditAsync(id);
                 return View("Delete", model);

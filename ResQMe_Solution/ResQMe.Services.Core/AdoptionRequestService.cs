@@ -36,7 +36,15 @@
             };
 
             await context.AdoptionRequests.AddAsync(request);
-            await context.SaveChangesAsync();
+
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new InvalidOperationException("You have already sent an adoption request for this animal.");
+            }
         }
 
         public async Task<bool> HasUserAlreadyRequestedAsync(string userId, int animalId)

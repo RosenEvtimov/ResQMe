@@ -88,7 +88,15 @@
             };
 
             await context.Shelters.AddAsync(shelter);
-            await context.SaveChangesAsync();
+
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new InvalidOperationException($"A shelter with the name '{model.Name}' at '{model.Address}' already exists.");
+            }
         }
 
         public async Task EditShelterAsync(ShelterFormViewModel model)
@@ -96,7 +104,9 @@
             var shelter = await context.Shelters.FindAsync(model.Id);
 
             if (shelter == null)
+            {
                 return;
+            }
 
             shelter.Name = model.Name;
             shelter.City = model.City;
@@ -106,7 +116,14 @@
             shelter.Description = model.Description;
             shelter.ImageUrl = model.ImageUrl;
 
-            await context.SaveChangesAsync();
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new InvalidOperationException($"A shelter with the name '{model.Name}' at '{model.Address}' already exists.");
+            }
         }
 
         public async Task<bool> DeleteShelterAsync(int id)
@@ -114,13 +131,17 @@
             var shelter = await context.Shelters.FindAsync(id);
 
             if (shelter == null)
+            {
                 return false;
+            }
 
             bool hasAnimals = await context.Animals
                 .AnyAsync(a => a.ShelterId == id);
 
             if (hasAnimals)
+            {
                 return false;
+            }
 
             context.Shelters.Remove(shelter);
             await context.SaveChangesAsync();

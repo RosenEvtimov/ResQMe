@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResQMe.Data;
 
@@ -11,9 +12,11 @@ using ResQMe.Data;
 namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260216015640_AddUniqueConstraintsForBreedShelterAndSpecies")]
+    partial class AddUniqueConstraintsForBreedShelterAndSpecies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,8 +194,7 @@ namespace ResQMe.Data.Migrations
 
                     b.HasIndex("AnimalId");
 
-                    b.HasIndex("UserId", "AnimalId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("AdoptionRequests");
                 });

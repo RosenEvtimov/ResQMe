@@ -46,7 +46,15 @@
             };
 
             await context.Species.AddAsync(species);
-            await context.SaveChangesAsync();
+
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new InvalidOperationException($"A species with the name '{model.Name}' already exists.");
+            }
         }
 
         public async Task EditSpeciesAsync(SpeciesFormViewModel model)
@@ -54,11 +62,20 @@
             var species = await context.Species.FindAsync(model.Id);
 
             if (species == null)
+            {
                 return;
+            }
 
             species.Name = model.Name;
 
-            await context.SaveChangesAsync();
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new InvalidOperationException($"A species with the name '{model.Name}' already exists.");
+            }
         }
 
         public async Task<bool> DeleteSpeciesAsync(int id)

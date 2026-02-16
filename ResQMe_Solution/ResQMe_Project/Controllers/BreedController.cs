@@ -41,9 +41,17 @@
                 return View(model);
             }
 
-            await breedService.AddBreedAsync(model);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await breedService.AddBreedAsync(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                model.Species = await breedService.GetSpeciesForDropdownAsync();
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -69,9 +77,17 @@
                 return View(model);
             }
 
-            await breedService.EditBreedAsync(model);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await breedService.EditBreedAsync(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                model.Species = await breedService.GetSpeciesForDropdownAsync();
+                return View(model);
+            }
         }
 
         [HttpGet]

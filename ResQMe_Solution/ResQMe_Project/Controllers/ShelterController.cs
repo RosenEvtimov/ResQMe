@@ -48,9 +48,16 @@
                 return View(model);
             }
 
-            await shelterService.AddShelterAsync(model);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await shelterService.AddShelterAsync(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -75,9 +82,16 @@
                 return View(model);
             }
 
-            await shelterService.EditShelterAsync(model);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await shelterService.EditShelterAsync(model);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
+            }
         }
 
         [HttpGet]

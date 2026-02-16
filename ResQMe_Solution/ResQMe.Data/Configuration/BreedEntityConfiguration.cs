@@ -191,34 +191,6 @@
                 Name = "Bengal",
                 SpeciesId = 2
             }
-
-            /* Dogs Special */
-            //new Breed()
-            //{
-            //    Id = 31,
-            //    Name = "Mixed",
-            //    SpeciesId = 1
-            //},
-            //new Breed()
-            //{
-            //    Id = 32,
-            //    Name = "Unknown",
-            //    SpeciesId = 1
-            //},
-
-            /* Cats Special */
-            //new Breed()
-            //{
-            //    Id = 33,
-            //    Name = "Mixed",
-            //    SpeciesId = 2
-            //},
-            //new Breed()
-            //{
-            //    Id = 34,
-            //    Name = "Unknown",
-            //    SpeciesId = 2
-            //}
         };
 
         public void Configure(EntityTypeBuilder<Breed> entity)

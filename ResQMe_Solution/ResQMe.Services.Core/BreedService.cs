@@ -51,7 +51,20 @@
             };
 
             await context.Breeds.AddAsync(breed);
-            await context.SaveChangesAsync();
+
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                var speciesName = await context.Species
+                    .Where(s => s.Id == model.SpeciesId!.Value)
+                    .Select(s => s.Name)
+                    .FirstOrDefaultAsync();
+
+                throw new InvalidOperationException($"A breed with the name '{model.Name}' already exists for {speciesName}.");
+            }
         }
 
         public async Task EditBreedAsync(BreedFormViewModel model)
@@ -59,12 +72,26 @@
             var breed = await context.Breeds.FindAsync(model.Id);
 
             if (breed == null)
+            {
                 return;
+            }
 
             breed.Name = model.Name;
             breed.SpeciesId = model.SpeciesId!.Value;
 
-            await context.SaveChangesAsync();
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                var speciesName = await context.Species
+                    .Where(s => s.Id == model.SpeciesId!.Value)
+                    .Select(s => s.Name)
+                    .FirstOrDefaultAsync();
+
+                throw new InvalidOperationException($"A breed with the name '{model.Name}' already exists for {speciesName}.");
+            }
         }
 
         public async Task<bool> DeleteBreedAsync(int id)
