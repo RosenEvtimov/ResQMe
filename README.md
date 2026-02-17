@@ -197,8 +197,6 @@ Initial sample data (species, many breeds, two shelters and three sample animals
 
 This project is licensed under the MIT License — see the `LICENSE` file for details.
 
-Below is the full MIT License text you can place in a `LICENSE` file (replace the year and owner as appropriate):
-
 MIT License
 
 Copyright (c) 2026 ResQMe
