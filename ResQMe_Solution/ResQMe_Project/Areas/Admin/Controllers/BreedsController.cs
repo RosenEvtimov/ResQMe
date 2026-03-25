@@ -7,11 +7,11 @@
 
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class BreedController : Controller
+    public class BreedsController : Controller
     {
         private readonly IBreedService breedService;
 
-        public BreedController(IBreedService breedService)
+        public BreedsController(IBreedService breedService)
         {
             this.breedService = breedService;
         }

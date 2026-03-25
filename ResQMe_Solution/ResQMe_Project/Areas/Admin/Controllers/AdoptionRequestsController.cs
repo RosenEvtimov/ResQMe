@@ -1,16 +1,17 @@
-﻿namespace ResQMe_Project.Controllers
+﻿namespace ResQMe_Project.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Data.Models.Enums;
     using ResQMe.Services.Core.Interfaces;
 
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class AdoptionRequestAdminController : Controller
+    public class AdoptionRequestsController : Controller
     {
         private readonly IAdoptionRequestService adoptionRequestService;
 
-        public AdoptionRequestAdminController(IAdoptionRequestService adoptionRequestService)
+        public AdoptionRequestsController(IAdoptionRequestService adoptionRequestService)
         {
             this.adoptionRequestService = adoptionRequestService;
         }

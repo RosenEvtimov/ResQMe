@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\AdoptionRequestAdmin\" />
     <Folder Include="Views\Breed\" />
     <Folder Include="Views\Species\" />
   </ItemGroup>
