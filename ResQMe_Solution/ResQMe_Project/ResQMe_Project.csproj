@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Breed\" />
+    <Folder Include="Views\Species\" />
   </ItemGroup>
 
 </Project>

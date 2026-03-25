@@ -35,7 +35,7 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index">Species</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Species" asp-action="Index">Species</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Breed" asp-action="Index">Breeds</a>
