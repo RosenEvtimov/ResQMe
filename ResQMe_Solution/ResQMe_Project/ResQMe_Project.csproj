@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ResQMe.ViewModels\ResQMe.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Breed\" />
+  </ItemGroup>
+
 </Project>

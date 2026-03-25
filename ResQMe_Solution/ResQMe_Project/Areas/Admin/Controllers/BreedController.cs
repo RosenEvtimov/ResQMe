@@ -1,10 +1,11 @@
-﻿namespace ResQMe_Project.Controllers
+﻿namespace ResQMe_Project.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.Breed;
 
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class BreedController : Controller
     {
