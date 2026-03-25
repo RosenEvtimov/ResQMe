@@ -46,7 +46,8 @@
 
             @if (ViewBag.FromShelterId != null)
             {
-                <a asp-controller="Shelter"
+                <a asp-area=""
+                   asp-controller="Shelter"
                    asp-action="Details"
                    asp-route-id="@ViewBag.FromShelterId"
                    class="btn btn-secondary mt-3">
@@ -71,7 +72,8 @@
                 }
                 else
                 {
-                    <a asp-controller="AdoptionRequest"
+                    <a asp-area=""
+                       asp-controller="AdoptionRequest"
                        asp-action="Create"
                        asp-route-animalId="@Model.Id"
                        class="btn btn-success mt-3">

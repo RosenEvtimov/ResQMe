@@ -89,7 +89,7 @@
         Create
     </button>
 
-    <a asp-action="Index" class="btn btn-secondary">
+    <a asp-area="" asp-controller="Animal" asp-action="Index" class="btn btn-secondary">
         Cancel
     </a>
 
@@ -126,7 +126,7 @@
         });
 
         function loadBreeds(speciesId) {
-            fetch(`/Animal/GetBreeds?speciesId=${speciesId}`)
+            fetch(`/Admin/Animal/GetBreeds?speciesId=${speciesId}`)
                 .then(response => response.json())
                 .then(data => {
                     breedSelect.innerHTML = "";
@@ -154,8 +154,6 @@
                 breedSelect.innerHTML = "";
             }
         });
-
-
 
     </script>
 }
