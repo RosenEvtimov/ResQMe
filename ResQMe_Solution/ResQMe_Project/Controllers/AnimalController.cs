@@ -1,12 +1,9 @@
 ﻿namespace ResQMe_Project.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using ResQMe.Data.Models.Identity;
     using ResQMe.Services.Core.Interfaces;
-    using ResQMe.ViewModels.Animal;
-    using ResQMe.ViewModels.Common;
 
     public class AnimalController : Controller
     {

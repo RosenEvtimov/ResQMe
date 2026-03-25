@@ -21,8 +21,8 @@
 
             <p>@Model.Description</p>
 
-            <a asp-action="Index" class="btn btn-secondary mt-3">
-                Back to list
+            <a asp-area="" asp-controller="Shelter" asp-action="Index" class="btn btn-secondary mt-3">
+                Back to All Shelters
             </a>
         </div>
     </div>
@@ -55,7 +55,8 @@
                                 Gender: @animal.Gender
                             </p>
 
-                            <a asp-controller="Animal"
+                            <a asp-area=""
+                               asp-controller="Animal"
                                asp-action="Details"
                                asp-route-id="@animal.Id"
                                asp-route-fromShelterId="@Model.Id"
