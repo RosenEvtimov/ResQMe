@@ -1,0 +1,19 @@
+@model ResQMe.ViewModels.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Server error";
+}
+
+<div class="container text-center mt-5">
+    <h1 class="display-4 text-danger">500 — Server error</h1>
+    <p class="lead">An unexpected error occurred. Our team has been notified.</p>
+
+    @if (!string.IsNullOrEmpty(Model?.RequestId))
+    {
+        <p>
+            Request ID: <code>@Model.RequestId</code>
+        </p>
+    }
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-3">Return to home</a>
+</div>

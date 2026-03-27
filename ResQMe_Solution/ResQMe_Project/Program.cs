@@ -88,6 +88,9 @@ namespace ResQMe_Project
                 await next();
             });
 
+            /* Custom error view pages middleware */
+            app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
