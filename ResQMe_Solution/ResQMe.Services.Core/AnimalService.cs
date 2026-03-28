@@ -17,13 +17,83 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<AnimalListViewModel>> GetAllAnimalsAsync()
+        public async Task<PaginatedResultViewModel<AnimalListViewModel>> GetAllAnimalsAsync(
+           string? searchTerm,
+           List<int> speciesIds,
+           List<Gender> genders,
+           List<BreedType> breedTypes,
+           List<string> cities,
+           List<string> ageRanges,
+           bool? showAdopted,
+           int page,
+           int pageSize)
         {
-            return await context.Animals
+            var query = context.Animals
                 .Include(a => a.Shelter)
                 .Include(a => a.Breed)
                 .Include(a => a.Species)
-                .OrderBy(a => a.Name)
+                .AsQueryable();
+
+            /* Name or breed search */
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string term = searchTerm.Trim().ToLower();
+                query = query.Where(a =>
+                    a.Name.ToLower().Contains(term) ||
+                    (a.Breed != null && a.Breed.Name.ToLower().Contains(term)));
+            }
+
+            /* Species filter */
+            if (speciesIds.Any())
+            {
+                query = query.Where(a => speciesIds.Contains(a.SpeciesId));
+            }
+
+            /* Gender filter */
+            if (genders.Any())
+            {
+                query = query.Where(a => genders.Contains(a.Gender));
+            }
+
+            /* Breed type filter */
+            if (breedTypes.Any())
+            {
+                query = query.Where(a => breedTypes.Contains(a.BreedType));
+            }
+
+            /* City filter */
+            if (cities.Any())
+            {
+                query = query.Where(a => cities.Contains(a.Shelter.City));
+            }
+
+            /* Age range filter */
+            if (ageRanges.Any())
+            {
+                query = query.Where(a =>
+                    (ageRanges.Contains("under 1") && a.Age < 1) ||
+                    (ageRanges.Contains("1-3") && a.Age >= 1 && a.Age <= 3) ||
+                    (ageRanges.Contains("4-6") && a.Age >= 4 && a.Age <= 6) ||
+                    (ageRanges.Contains("7-9") && a.Age >= 7 && a.Age <= 9) ||
+                    (ageRanges.Contains("10-12") && a.Age >= 10 && a.Age <= 12) ||
+                    (ageRanges.Contains("13-15") && a.Age >= 13 && a.Age <= 15) ||
+                    (ageRanges.Contains("over 15") && a.Age > 15));
+            }
+
+            /* Adopted filter */
+            if (showAdopted.HasValue)
+            {
+                query = query.Where(a => a.IsAdopted == showAdopted.Value);
+            }
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = await query
+                .OrderBy(a => a.IsAdopted)
+                .ThenBy(a => a.Name)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(a => new AnimalListViewModel
                 {
                     Id = a.Id,
@@ -38,6 +108,24 @@
                     IsAdopted = a.IsAdopted,
                     ImageUrl = a.ImageUrl
                 })
+                .ToListAsync();
+
+            return new PaginatedResultViewModel<AnimalListViewModel>
+            {
+                Items = items,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                SearchTerm = searchTerm
+            };
+        }
+
+        /* Unique Cities for Filter */
+        public async Task<IEnumerable<string>> GetUniqueCitiesAsync()
+        {
+            return await context.Shelters
+                .Select(s => s.City)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToListAsync();
         }
 

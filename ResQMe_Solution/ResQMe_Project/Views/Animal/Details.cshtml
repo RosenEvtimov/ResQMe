@@ -54,9 +54,17 @@
                     Back to Shelter Details
                 </a>
             }
+            else if (!string.IsNullOrEmpty(ViewBag.ReturnUrl as string))
+            {
+                <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
+                    Back to Filtered Animals
+                </a>
+            }
             else
             {
-                <a asp-action="Index"
+                <a asp-area=""
+                   asp-controller="Animal"
+                   asp-action="Index"
                    class="btn btn-secondary mt-3">
                     Back to All Animals
                 </a>

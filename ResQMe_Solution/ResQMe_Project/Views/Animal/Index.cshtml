@@ -1,69 +1,255 @@
 ﻿@using ResQMe.ViewModels.Animal
-@model IEnumerable<AnimalListViewModel>
+@using ResQMe.Data.Models.Enums
+@model AnimalFilterViewModel
 
-<h2 class="mb-4 text-center">Our animals</h2>
+<div class="row mt-3">
 
-@if (!Model.Any())
-{
-    <div class="alert alert-info">
-        No animals available at the moment.
-    </div>
-}
+    <!-- Sidebar Filters -->
+    <div class="col-md-3">
+        <form method="get" id="filterForm">
+            <div class="card p-3 mb-3">
 
-@if (User.IsInRole("Admin"))
-{
-    <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn btn-success mb-3">Add Animal</a>
-}
+                <!-- Search -->
+                <div class="mb-3">
+                    <label class="form-label fw-500">Search</label>
+                    <input type="text"
+                           name="searchTerm"
+                           value="@Model.SearchTerm"
+                           placeholder="Name or breed..."
+                           class="form-control form-control-sm" />
+                </div>
 
-<div class="row">
-    @foreach (var animal in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="@animal.ImageUrl" class="card-img-top animal-image" style="height:200px; object-fit:cover;" />
-                <div class="card-body">
-                    <h5>@animal.Name (@animal.Age)</h5>
-                    <p>
-                        <strong>Gender:</strong> @animal.Gender <br />
-                        <strong>Breed:</strong> @animal.BreedDisplay <br />
-                        <strong>Species:</strong> @animal.Species <br />
-                        <strong>Shelter:</strong> @animal.Shelter
-                    </p>
-                    @if (animal.IsAdopted)
+                <!-- Species -->
+                <div class="mb-3">
+                    <div class="fw-500 mb-2">Species</div>
+                    @foreach (var species in Model.AvailableSpecies)
                     {
-                        <span class="badge bg-danger">Adopted</span>
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="selectedSpeciesIds"
+                                   value="@species.Id"
+                                   id="species_@species.Id"
+                                   @(Model.SelectedSpeciesIds.Contains(species.Id) ? "checked" : "") />
+                            <label class="form-check-label" for="species_@species.Id">
+                                @species.Name
+                            </label>
+                        </div>
                     }
-                    else
-                    {
-                        <span class="badge bg-success">Available</span>
-                    }
-                    <div class="mt-2">
-                        <a asp-action="Details"
-                           asp-route-id="@animal.Id"
-                           class="btn btn-primary btn-sm">
-                            Details
-                        </a>
+                </div>
 
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-area="Admin"
-                               asp-controller="Animal"
-                               asp-action="Edit"
-                               asp-route-id="@animal.Id"
-                               class="btn btn-warning btn-sm">
-                                Edit
-                            </a>
-                            <a asp-area="Admin"
-                               asp-controller="Animal"
-                               asp-action="Delete"
-                               asp-route-id="@animal.Id"
-                               class="btn btn-danger btn-sm">
-                                Delete
-                            </a>
-                        }
+                <!-- Gender -->
+                <div class="mb-3">
+                    <div class="fw-500 mb-2">Gender</div>
+                    @foreach (Gender gender in Enum.GetValues(typeof(Gender)))
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="selectedGenders"
+                                   value="@((int)gender)"
+                                   id="gender_@gender"
+                                   @(Model.SelectedGenders.Contains(gender) ? "checked" : "") />
+                            <label class="form-check-label" for="gender_@gender">
+                                @gender
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <!-- Breed Type -->
+                <div class="mb-3">
+                    <div class="fw-500 mb-2">Breed Type</div>
+                    @foreach (BreedType breedType in Enum.GetValues(typeof(BreedType)))
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="selectedBreedTypes"
+                                   value="@((int)breedType)"
+                                   id="breedType_@breedType"
+                                   @(Model.SelectedBreedTypes.Contains(breedType) ? "checked" : "") />
+                            <label class="form-check-label" for="breedType_@breedType">
+                                @breedType
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <!-- City -->
+                <div class="mb-3">
+                    <div class="fw-500 mb-2">City</div>
+                    @foreach (var city in Model.AvailableCities)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="selectedCities"
+                                   value="@city"
+                                   id="city_@city"
+                                   @(Model.SelectedCities.Contains(city) ? "checked" : "") />
+                            <label class="form-check-label" for="city_@city">
+                                @city
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <!-- Age Range -->
+                <div class="mb-3">
+                    <div class="fw-500 mb-2">Age</div>
+                    @foreach (var range in new[] { "under 1", "1-3", "4-6", "7-9", "10-12", "13-15", "over 15" })
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="selectedAgeRanges"
+                                   value="@range"
+                                   id="age_@range"
+                                   @(Model.SelectedAgeRanges.Contains(range) ? "checked" : "") />
+                            <label class="form-check-label" for="age_@range">
+                                @range
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <!-- Status -->
+                <div class="mb-3">
+                    <div class="fw-500 mb-2">Status</div>
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="showAdopted"
+                               value="false"
+                               id="statusAvailable"
+                               @(Model.ShowAdopted == false ? "checked" : "") />
+                        <label class="form-check-label" for="statusAvailable">
+                            Available
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="showAdopted"
+                               value="true"
+                               id="statusAdopted"
+                               @(Model.ShowAdopted == true ? "checked" : "") />
+                        <label class="form-check-label" for="statusAdopted">
+                            Adopted
+                        </label>
                     </div>
                 </div>
+
+                <!-- Buttons -->
+                <button type="submit" class="btn btn-primary btn-sm w-100 mb-2">
+                    Apply Filters
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm w-100">
+                    Clear All
+                </a>
+
             </div>
-        </div>
-    }
+        </form>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+        <h2 class="mb-3 text-center">Our animals</h2>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-area="Admin"
+               asp-controller="Animal"
+               asp-action="Add"
+               class="btn btn-success mb-3">
+                Add Animal
+            </a>
+        }
+
+        @if (!Model.Results.Items.Any())
+        {
+            <div class="alert alert-info">
+                No animals found matching your filters.
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var animal in Model.Results.Items)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="@animal.ImageUrl"
+                                 class="card-img-top"
+                                 style="height:200px; object-fit:cover;" />
+                            <div class="card-body">
+                                <h5>@animal.Name (@animal.Age)</h5>
+                                <p>
+                                    <strong>Gender:</strong> @animal.Gender <br />
+                                    <strong>Breed:</strong> @animal.BreedDisplay <br />
+                                    <strong>Species:</strong> @animal.Species <br />
+                                    <strong>Shelter:</strong> @animal.Shelter
+                                </p>
+                                @if (animal.IsAdopted)
+                                {
+                                    <span class="badge bg-danger">Adopted</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Available</span>
+                                }
+                                <div class="mt-2">
+                                    <a asp-action="Details"
+                                       asp-route-id="@animal.Id"
+                                       asp-route-returnUrl="@(Context.Request.QueryString.Value != "?" ? Context.Request.QueryString.Value : null)"
+                                       class="btn btn-primary btn-sm">
+                                        Details
+                                    </a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a asp-area="Admin"
+                                           asp-controller="Animal"
+                                           asp-action="Edit"
+                                           asp-route-id="@animal.Id"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+                                        <a asp-area="Admin"
+                                           asp-controller="Animal"
+                                           asp-action="Delete"
+                                           asp-route-id="@animal.Id"
+                                           class="btn btn-danger btn-sm">
+                                            Delete
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            @if (Model.Results.TotalPages > 1)
+            {
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @(!Model.Results.HasPreviousPage ? "disabled" : "")">
+                            <button type="submit" form="filterForm" name="page" value="1" class="page-link">First</button>
+                        </li>
+                        @for (int i = 1; i <= Model.Results.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.Results.CurrentPage ? "active" : "")">
+                                <button type="submit" form="filterForm" name="page" value="@i" class="page-link">@i</button>
+                            </li>
+                        }
+                        <li class="page-item @(!Model.Results.HasNextPage ? "disabled" : "")">
+                            <button type="submit" form="filterForm" name="page" value="@Model.Results.TotalPages" class="page-link">Last</button>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        }
+    </div>
 </div>

@@ -1,11 +1,21 @@
 ﻿namespace ResQMe.Services.Core.Interfaces
 {
+    using ResQMe.Data.Models.Enums;
     using ResQMe.ViewModels.Animal;
     using ResQMe.ViewModels.Common;
 
     public interface IAnimalService
     {
-        Task<IEnumerable<AnimalListViewModel>> GetAllAnimalsAsync();
+        Task<PaginatedResultViewModel<AnimalListViewModel>> GetAllAnimalsAsync(
+            string? searchTerm,
+            List<int> speciesIds,
+            List<Gender> genders,
+            List<BreedType> breedTypes,
+            List<string> cities,
+            List<string> ageRanges,
+            bool? showAdopted,
+            int page,
+            int pageSize);
 
         Task<AnimalDetailsViewModel?> GetAnimalDetailsAsync(int id);
 
@@ -24,5 +34,7 @@
 
         Task<IEnumerable<DropdownItemViewModel>> GetSheltersForDropdownAsync();
 
+        /* Filter Support */
+        Task<IEnumerable<string>> GetUniqueCitiesAsync();
     }
 }

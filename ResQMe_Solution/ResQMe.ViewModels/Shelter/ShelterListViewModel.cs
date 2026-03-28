@@ -7,5 +7,4 @@
         public string City { get; set; } = null!;
         public string ImageUrl { get; set; } = null!;
     }
-
 }
