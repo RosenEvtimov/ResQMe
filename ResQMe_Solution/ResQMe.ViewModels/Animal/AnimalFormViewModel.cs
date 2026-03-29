@@ -40,7 +40,9 @@
 
         [Required]
         public int? ShelterId { get; set; }
-            
+
+        public string? ReturnUrl { get; set; }
+
         /* Dropdown collections */
         public IEnumerable<DropdownItemViewModel> Species { get; set; } = new List<DropdownItemViewModel>();
 

@@ -85,11 +85,14 @@
         </select>
     </div>
 
+    <input type="hidden" asp-for="ReturnUrl" />
+
     <button type="submit" class="btn btn-primary">
         Create
     </button>
 
-    <a asp-area="" asp-controller="Animal" asp-action="Index" class="btn btn-secondary">
+    <a href="@($"/Animal/Index{Model.ReturnUrl}")"
+       class="btn btn-secondary">
         Cancel
     </a>
 

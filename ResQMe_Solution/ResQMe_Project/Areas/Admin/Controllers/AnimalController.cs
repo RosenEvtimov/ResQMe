@@ -18,13 +18,14 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(string? returnUrl)
         {
             var model = new AnimalFormViewModel
             {
                 Species = await animalService.GetSpeciesForDropdownAsync(),
                 Breeds = new List<DropdownItemViewModel>(),
-                Shelters = await animalService.GetSheltersForDropdownAsync()
+                Shelters = await animalService.GetSheltersForDropdownAsync(),
+                ReturnUrl = returnUrl
             };
 
             return View(model);
@@ -34,6 +35,7 @@
         public async Task<IActionResult> GetBreeds(int speciesId)
         {
             var breeds = await animalService.GetBreedsBySpeciesAsync(speciesId);
+
             return Json(breeds);
         }
 
@@ -56,11 +58,11 @@
 
             await animalService.AddAnimalAsync(model);
 
-            return RedirectToAction("Index", "Animal", new { area = "" });
+            return Redirect("/Animal/Index" + model.ReturnUrl);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, string? returnUrl)
         {
             var model = await animalService.GetAnimalForEditAsync(id);
 
@@ -76,6 +78,8 @@
             {
                 model.Breeds = await animalService.GetBreedsBySpeciesAsync(model.SpeciesId.Value);
             }
+
+            model.ReturnUrl = returnUrl;
 
             return View(model);
         }
@@ -99,11 +103,11 @@
 
             await animalService.EditAnimalAsync(model);
 
-            return RedirectToAction("Index", "Animal", new { area = "" });
+            return Redirect("/Animal/Index" + model.ReturnUrl);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, string? returnUrl)
         {
             var model = await animalService.GetAnimalDetailsAsync(id);
 
@@ -112,12 +116,14 @@
                 return NotFound();
             }
 
+            ViewBag.ReturnUrl = returnUrl;
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string? returnUrl)
         {
             bool deleted = await animalService.DeleteAnimalAsync(id);
 
@@ -130,13 +136,15 @@
                     return NotFound();
                 }
 
+                ViewBag.ReturnUrl = returnUrl;
+
                 ModelState.AddModelError(string.Empty,
                     "You cannot delete this animal, because it either has adoption requests or doesn't exist.");
 
                 return View("Delete", model);
             }
 
-            return RedirectToAction("Index", "Animal", new { area = "" });
+            return Redirect("/Animal/Index" + returnUrl);
         }
     }
 }

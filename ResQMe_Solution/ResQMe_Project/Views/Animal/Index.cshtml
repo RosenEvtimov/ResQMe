@@ -162,6 +162,7 @@
             <a asp-area="Admin"
                asp-controller="Animal"
                asp-action="Add"
+               asp-route-returnUrl="@Context.Request.QueryString.Value"
                class="btn btn-success mb-3">
                 Add Animal
             </a>
@@ -212,6 +213,7 @@
                                            asp-controller="Animal"
                                            asp-action="Edit"
                                            asp-route-id="@animal.Id"
+                                           asp-route-returnUrl="@Context.Request.QueryString.Value"
                                            class="btn btn-warning btn-sm">
                                             Edit
                                         </a>
@@ -219,6 +221,7 @@
                                            asp-controller="Animal"
                                            asp-action="Delete"
                                            asp-route-id="@animal.Id"
+                                           asp-route-returnUrl="@Context.Request.QueryString.Value"
                                            class="btn btn-danger btn-sm">
                                             Delete
                                         </a>

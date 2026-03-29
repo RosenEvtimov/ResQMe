@@ -25,11 +25,14 @@
 
                 <form asp-action="DeleteConfirmed" method="post">
                     <input type="hidden" asp-for="Id" />
+                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
                     <button type="submit" class="btn btn-danger">
                         Delete
                     </button>
 
-                    <a asp-area="" asp-controller="Animal" asp-action="Index" class="btn btn-secondary">
+                    <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")"
+                       class="btn btn-secondary">
                         Cancel
                     </a>
                 </form>
