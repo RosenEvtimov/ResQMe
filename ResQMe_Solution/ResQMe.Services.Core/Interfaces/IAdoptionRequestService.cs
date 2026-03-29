@@ -2,6 +2,7 @@
 {
     using ResQMe.Data.Models.Enums;
     using ResQMe.ViewModels.AdoptionRequest;
+    using ResQMe.ViewModels.Common;
 
     public interface IAdoptionRequestService
     {
@@ -13,7 +14,10 @@
         Task<IEnumerable<MyAdoptionRequestsViewModel>> GetMyRequestsAsync(string userId);
 
         /* Admin methods */
-        Task<IEnumerable<AdoptionRequestAdminListViewModel>> GetAllRequestsForAdminAsync(AdoptionRequestStatus? status);
+        Task<PaginatedResultViewModel<AdoptionRequestAdminListViewModel>> GetAllRequestsForAdminAsync(
+            AdoptionRequestStatus? status,
+            int page,
+            int pageSize);
 
         Task<AdoptionRequestAdminDetailsViewModel?> GetRequestByIdForAdminAsync(int id);
 

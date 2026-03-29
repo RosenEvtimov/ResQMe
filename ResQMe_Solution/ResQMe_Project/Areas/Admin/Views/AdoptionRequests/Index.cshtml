@@ -1,6 +1,7 @@
 ﻿@using ResQMe.ViewModels.AdoptionRequest
 @using ResQMe.Data.Models.Enums
-@model IEnumerable<AdoptionRequestAdminListViewModel>
+@using ResQMe.ViewModels.Common
+@model PaginatedResultViewModel<AdoptionRequestAdminListViewModel>
 
 @if (TempData["AdminSuccess"] != null)
 {
@@ -11,34 +12,20 @@
 
 <h2>@ViewBag.CurrentStatus.ToString() adoption requests</h2>
 
-<form method="get" class="mb-3">
+<!-- Filter -->
+<form method="get" id="filterForm" class="mb-3">
     <select name="status"
             class="form-select w-auto d-inline"
             onchange="this.form.submit()">
-
-        <option value="All"
-                selected="@(ViewBag.CurrentStatus?.ToString() == "All")">
-            All
-        </option>
-
-        <option value="Pending"
-                selected="@(ViewBag.CurrentStatus?.ToString() == "Pending")">
-            Pending
-        </option>
-
-        <option value="Approved"
-                selected="@(ViewBag.CurrentStatus?.ToString() == "Approved")">
-            Approved
-        </option>
-
-        <option value="Rejected"
-                selected="@(ViewBag.CurrentStatus?.ToString() == "Rejected")">
-            Rejected
-        </option>
+        <option value="All" selected="@(ViewBag.CurrentStatus?.ToString() == "All")">All</option>
+        <option value="Pending" selected="@(ViewBag.CurrentStatus?.ToString() == "Pending")">Pending</option>
+        <option value="Approved" selected="@(ViewBag.CurrentStatus?.ToString() == "Approved")">Approved</option>
+        <option value="Rejected" selected="@(ViewBag.CurrentStatus?.ToString() == "Rejected")">Rejected</option>
     </select>
 </form>
 
-@if (!Model.Any())
+<!-- Main content -->
+@if (!Model.Items.Any())
 {
     <div class="alert alert-info">
         @if (ViewBag.CurrentStatus?.ToString() == "All")
@@ -65,26 +52,46 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var request in Model)
+            @foreach (var request in Model.Items)
             {
                 <tr>
                     <td>@request.AnimalName</td>
                     <td>@request.ApplicantFullName</td>
                     <td>@request.City</td>
-                    <td>
-                        @request.CreatedOn.ToString("dd MMMM yyyy - HH:mm", System.Globalization.CultureInfo.InvariantCulture)                               
-                    </td>
+                    <td>@request.CreatedOn.ToString("dd MMMM yyyy - HH:mm", System.Globalization.CultureInfo.InvariantCulture)</td>
                     <td>@request.Status</td>
                     <td>
                         <a asp-action="Details"
-                        asp-route-id="@request.Id"
-                        asp-route-status="@ViewBag.CurrentStatus"
-                        class="btn btn-sm btn-primary">
+                           asp-route-id="@request.Id"
+                           asp-route-status="@ViewBag.CurrentStatus"
+                           asp-route-page="@Model.CurrentPage"
+                           class="btn btn-sm btn-primary">
                             Details
                         </a>
                     </td>
                 </tr>
-                }
+            }
         </tbody>
     </table>
+
+    <!-- Pagination -->
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                    <button type="submit" form="filterForm" name="page" value="1" class="page-link">First</button>
+                </li>
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <button type="submit" form="filterForm" name="page" value="@i" class="page-link">@i</button>
+                    </li>
+                }
+                <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                    <button type="submit" form="filterForm" name="page" value="@Model.TotalPages" class="page-link">Last</button>
+                </li>
+            </ul>
+        </nav>
+    }
 }

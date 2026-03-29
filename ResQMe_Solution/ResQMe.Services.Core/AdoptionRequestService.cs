@@ -6,6 +6,7 @@
     using ResQMe.Data.Models.Enums;
     using ResQMe.Services.Core.Interfaces;
     using ResQMe.ViewModels.AdoptionRequest;
+    using ResQMe.ViewModels.Common;
 
     public class AdoptionRequestService : IAdoptionRequestService
     {
@@ -72,7 +73,10 @@
         }
 
         /* Admin methods */
-        public async Task<IEnumerable<AdoptionRequestAdminListViewModel>> GetAllRequestsForAdminAsync(AdoptionRequestStatus? status)
+        public async Task<PaginatedResultViewModel<AdoptionRequestAdminListViewModel>> GetAllRequestsForAdminAsync(
+            AdoptionRequestStatus? status,
+            int page,
+            int pageSize)
         {
             var query = context.AdoptionRequests
                 .Include(ar => ar.Animal)
@@ -84,8 +88,13 @@
                 query = query.Where(ar => ar.Status == status.Value);
             }
 
-            return await query
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = await query
                 .OrderBy(ar => ar.CreatedOn)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(ar => new AdoptionRequestAdminListViewModel
                 {
                     Id = ar.Id,
@@ -96,6 +105,13 @@
                     Status = ar.Status
                 })
                 .ToListAsync();
+
+            return new PaginatedResultViewModel<AdoptionRequestAdminListViewModel>
+            {
+                Items = items,
+                CurrentPage = page,
+                TotalPages = totalPages
+            };
         }
 
         public async Task<AdoptionRequestAdminDetailsViewModel?> GetRequestByIdForAdminAsync(int id)

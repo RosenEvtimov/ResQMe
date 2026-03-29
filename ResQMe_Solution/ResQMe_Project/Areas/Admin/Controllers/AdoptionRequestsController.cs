@@ -16,8 +16,10 @@
             this.adoptionRequestService = adoptionRequestService;
         }
 
-        public async Task<IActionResult> Index(string? status)
+        public async Task<IActionResult> Index(string? status, int page = 1)
         {
+            const int pageSize = 2;
+
             AdoptionRequestStatus? parsedStatus = null;
 
             /*If no status is provided, default to "Pending". 
@@ -38,20 +40,18 @@
                 parsedStatus = result;
             }
 
-            var model = await adoptionRequestService
-                .GetAllRequestsForAdminAsync(parsedStatus);
+            var model = await adoptionRequestService.GetAllRequestsForAdminAsync(parsedStatus, page, pageSize);
 
             ViewBag.CurrentStatus = status;
 
             return View(model);
         }
 
-
-
         [HttpGet]
-        public async Task<IActionResult> Details(int id, string? status)
+        public async Task<IActionResult> Details(int id, string? status, int page = 1)
         {
             ViewBag.CurrentStatus = status;
+            ViewBag.CurrentPage = page;
 
             var model = await adoptionRequestService.GetRequestByIdForAdminAsync(id);
 
@@ -65,46 +65,46 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Approve(int id, string? status)
+        public async Task<IActionResult> Approve(int id, string? status, int page = 1)
         {
             await adoptionRequestService.ApproveRequestAsync(id);
 
             TempData["AdminSuccess"] = "Request approved successfully.";
 
-            return RedirectToAction(nameof(Index), new {status});
+            return RedirectToAction(nameof(Index), new {status, page});
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reject(int id, string? status)
+        public async Task<IActionResult> Reject(int id, string? status, int page = 1)
         {
             await adoptionRequestService.RejectRequestAsync(id);
 
             TempData["AdminSuccess"] = "Request rejected successfully.";
 
-            return RedirectToAction(nameof(Index), new {status});
+            return RedirectToAction(nameof(Index), new {status, page});
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UndoApproval(int id, string? status)
+        public async Task<IActionResult> UndoApproval(int id, string? status, int page = 1)
         {
             await adoptionRequestService.UndoApprovalAsync(id);
 
             TempData["AdminSuccess"] = "Approval undone successfully.";
 
-            return RedirectToAction(nameof(Index), new {status});
+            return RedirectToAction(nameof(Index), new {status, page});
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UndoRejection(int id, string? status)
+        public async Task<IActionResult> UndoRejection(int id, string? status, int page = 1)
         {
             await adoptionRequestService.UndoRejectionAsync(id);
 
             TempData["AdminSuccess"] = "Rejection undone successfully.";
 
-            return RedirectToAction(nameof(Index), new { status });
+            return RedirectToAction(nameof(Index), new { status, page});
         }
     }
 }
