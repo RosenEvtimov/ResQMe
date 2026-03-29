@@ -17,5 +17,7 @@
 
         public IEnumerable<DropdownItemViewModel> Species { get; set; }
             = new List<DropdownItemViewModel>();
+
+        public string? ReturnUrl { get; set; }
     }
 }

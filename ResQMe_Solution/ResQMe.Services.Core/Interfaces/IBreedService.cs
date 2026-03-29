@@ -5,7 +5,11 @@
 
     public interface IBreedService
     {
-        Task<IEnumerable<BreedListViewModel>> GetAllBreedsAsync();
+        Task<PaginatedResultViewModel<BreedListViewModel>> GetAllBreedsAsync(
+            string? searchTerm,
+            List<int> speciesIds,
+            int page,
+            int pageSize);
 
         Task<BreedFormViewModel?> GetBreedForEditAsync(int id);
 

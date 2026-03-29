@@ -16,12 +16,35 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<BreedListViewModel>> GetAllBreedsAsync()
+        public async Task<PaginatedResultViewModel<BreedListViewModel>> GetAllBreedsAsync(
+            string? searchTerm,
+            List<int> speciesIds,
+            int page,
+            int pageSize)
         {
-            return await context.Breeds
+            var query = context.Breeds
                 .Include(b => b.Species)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string term = searchTerm.Trim().ToLower();
+                query = query.Where(b => b.Name.ToLower().Contains(term));
+            }
+
+            if (speciesIds.Any())
+            {
+                query = query.Where(b => speciesIds.Contains(b.SpeciesId));
+            }
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = await query
                 .OrderBy(b => b.Species.Name)
                 .ThenBy(b => b.Name)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(b => new BreedListViewModel
                 {
                     Id = b.Id,
@@ -29,6 +52,14 @@
                     SpeciesName = b.Species.Name
                 })
                 .ToListAsync();
+
+            return new PaginatedResultViewModel<BreedListViewModel>
+            {
+                Items = items,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                SearchTerm = searchTerm
+            };
         }
 
         public async Task<BreedFormViewModel?> GetBreedForEditAsync(int id)

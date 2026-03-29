@@ -17,18 +17,33 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string? searchTerm,
+            List<int> selectedSpeciesIds,
+            int page = 1)
         {
-            var model = await breedService.GetAllBreedsAsync();
+            const int pageSize = 10;
+
+            var model = await breedService.GetAllBreedsAsync(
+                searchTerm,
+                selectedSpeciesIds,
+                page,
+                pageSize);
+
+            ViewBag.AvailableSpecies = await breedService.GetSpeciesForDropdownAsync();
+            ViewBag.SelectedSpeciesIds = selectedSpeciesIds;
+            ViewBag.SearchTerm = searchTerm;
+
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(string? returnUrl)
         {
             var model = new BreedFormViewModel
             {
-                Species = await breedService.GetSpeciesForDropdownAsync()
+                Species = await breedService.GetSpeciesForDropdownAsync(),
+                ReturnUrl = returnUrl
             };
 
             return View(model);
@@ -47,7 +62,7 @@
             try
             {
                 await breedService.AddBreedAsync(model);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Admin/Breeds/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -58,7 +73,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, string? returnUrl)
         {
             var model = await breedService.GetBreedForEditAsync(id);
 
@@ -68,6 +83,7 @@
             }
 
             model.Species = await breedService.GetSpeciesForDropdownAsync();
+            model.ReturnUrl = returnUrl;
 
             return View(model);
         }
@@ -85,7 +101,7 @@
             try
             {
                 await breedService.EditBreedAsync(model);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Admin/Breeds/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -96,7 +112,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, string? returnUrl)
         {
             var model = await breedService.GetBreedForEditAsync(id);
 
@@ -105,12 +121,14 @@
                 return NotFound();
             }
 
+            model.ReturnUrl = returnUrl;
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string? returnUrl)
         {
             bool deleted = await breedService.DeleteBreedAsync(id);
 
@@ -123,13 +141,15 @@
                     return NotFound();
                 }
 
+                model.ReturnUrl = returnUrl;
+
                 ModelState.AddModelError(string.Empty,
                     "You cannot delete this breed, because there are animals assigned to it.");
 
                 return View("Delete", model);
             }
 
-            return RedirectToAction(nameof(Index));
+            return Redirect("/Admin/Breeds/Index" + returnUrl);
         }
     }
 }
