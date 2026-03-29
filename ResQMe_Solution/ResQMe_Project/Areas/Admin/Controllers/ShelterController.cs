@@ -17,9 +17,9 @@
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Add(string? returnUrl)
         {
-            return View(new ShelterFormViewModel());
+            return View(new ShelterFormViewModel { ReturnUrl = returnUrl});
         }
 
         [HttpPost]
@@ -34,7 +34,7 @@
             try
             {
                 await shelterService.AddShelterAsync(model);
-                return RedirectToAction("Index", "Shelter", new { area = "" });
+                return Redirect("/Shelter/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -44,7 +44,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, string? returnUrl)
         {
             var model = await shelterService.GetShelterForEditAsync(id);
 
@@ -52,6 +52,9 @@
             {
                 return NotFound();
             }
+
+            model.ReturnUrl = returnUrl;
+
             return View(model);
         }
 
@@ -67,7 +70,7 @@
             try
             {
                 await shelterService.EditShelterAsync(model);
-                return RedirectToAction("Index", "Shelter", new { area = "" });
+                return Redirect("/Shelter/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -77,7 +80,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, string? returnUrl)
         {
             var model = await shelterService.GetShelterDetailsAsync(id);
 
@@ -86,12 +89,14 @@
                 return NotFound();
             }
 
+            ViewBag.ReturnUrl = returnUrl;
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string? returnUrl)
         {
             bool deleted = await shelterService.DeleteShelterAsync(id);
 
@@ -104,13 +109,15 @@
                     return NotFound();
                 }
 
+                ViewBag.ReturnUrl = returnUrl;
+
                 ModelState.AddModelError(string.Empty,
                     "You cannot delete this shelter, because it still has animals assigned to it.");
 
                 return View("Delete", model);
             }
 
-            return RedirectToAction("Index", "Shelter", new { area = "" });
+            return Redirect("/Shelter/Index" + returnUrl);
         }
     }
 }

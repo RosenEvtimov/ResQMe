@@ -59,6 +59,7 @@
             <a asp-area="Admin"
                asp-controller="Shelter"
                asp-action="Add"
+               asp-route-returnUrl="@Context.Request.QueryString.Value"
                class="btn btn-success mb-3">
                 Add Shelter
             </a>
@@ -95,6 +96,7 @@
                                        asp-controller="Shelter"
                                        asp-action="Edit"
                                        asp-route-id="@shelter.Id"
+                                       asp-route-returnUrl="@Context.Request.QueryString.Value"
                                        class="btn btn-warning btn-sm">
                                         Edit
                                     </a>
@@ -102,6 +104,7 @@
                                        asp-controller="Shelter"
                                        asp-action="Delete"
                                        asp-route-id="@shelter.Id"
+                                       asp-route-returnUrl="@Context.Request.QueryString.Value"
                                        class="btn btn-danger btn-sm">
                                         Delete
                                     </a>

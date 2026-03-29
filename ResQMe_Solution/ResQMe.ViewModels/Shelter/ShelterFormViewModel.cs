@@ -36,5 +36,7 @@
         [Required]
         [Url]
         public string ImageUrl { get; set; } = null!;
+
+        public string? ReturnUrl { get; set; }
     }
 }
