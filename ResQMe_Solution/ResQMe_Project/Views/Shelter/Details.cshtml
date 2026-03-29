@@ -21,9 +21,18 @@
 
             <p>@Model.Description</p>
 
-            <a asp-area="" asp-controller="Shelter" asp-action="Index" class="btn btn-secondary mt-3">
-                Back to All Shelters
-            </a>
+            @if (ViewBag.HasActiveFilters == true)
+            {
+                <a href="@($"/Shelter/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
+                    Back to Filtered Shelters
+                </a>
+            }
+            else
+            {
+                <a href="@($"/Shelter/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
+                    Back to All Shelters
+                </a>
+            }
         </div>
     </div>
 
@@ -60,6 +69,7 @@
                                asp-action="Details"
                                asp-route-id="@animal.Id"
                                asp-route-fromShelterId="@Model.Id"
+                               asp-route-shelterReturnUrl="@ViewBag.ReturnUrl"
                                class="btn btn-primary btn-sm">
                                 View
                             </a>

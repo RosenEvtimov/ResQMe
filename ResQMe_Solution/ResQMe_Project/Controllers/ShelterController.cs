@@ -13,14 +13,28 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string? searchTerm,
+            List<string> selectedCities,
+            int page = 1)
         {
-            var model = await shelterService.GetAllSheltersAsync();
+            const int pageSize = 2;
+
+            var model = await shelterService.GetAllSheltersAsync(
+                searchTerm,
+                selectedCities,
+                page,
+                pageSize);
+
+            ViewBag.AvailableCities = await shelterService.GetUniqueCitiesAsync();
+            ViewBag.SelectedCities = selectedCities;
+            ViewBag.SearchTerm = searchTerm;
+
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string? returnUrl)
         {
             var model = await shelterService.GetShelterDetailsAsync(id);
 
@@ -28,6 +42,19 @@
             {
                 return NotFound();
             }
+
+            bool hasActiveFilters = false;
+
+            if (!string.IsNullOrEmpty(returnUrl) && returnUrl != "?")
+            {
+                var parsed = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(returnUrl.TrimStart('?'));
+                hasActiveFilters = 
+                    (parsed.ContainsKey("searchTerm") && !string.IsNullOrEmpty(parsed["searchTerm"])) ||
+                    (parsed.ContainsKey("selectedCities") && parsed["selectedCities"].Any(v => !string.IsNullOrEmpty(v)));
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.HasActiveFilters = hasActiveFilters;
 
             return View(model);
         }

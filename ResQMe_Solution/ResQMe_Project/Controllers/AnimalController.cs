@@ -63,7 +63,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id, int? fromShelterId, string? returnUrl)
+        public async Task<IActionResult> Details(int id, int? fromShelterId, string? returnUrl, string? shelterReturnUrl)
         {
             var model = await animalService.GetAnimalDetailsAsync(id);
 
@@ -73,6 +73,7 @@
             }
 
             ViewBag.FromShelterId = fromShelterId;
+            ViewBag.ShelterReturnUrl = shelterReturnUrl;
 
             /* Checking if the query is empty or not, for correct button visualisation on the Details View */
             var qs = Request.QueryString.Value;
@@ -92,7 +93,8 @@
                     (parsed.ContainsKey("showAdopted") && !string.IsNullOrEmpty(parsed["showAdopted"]));
             }
 
-            ViewBag.ReturnUrl = hasActiveFilters ? returnUrl : null;
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.HasActiveFilters = hasActiveFilters;
 
             if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("User"))
             {

@@ -3,8 +3,10 @@
     using Microsoft.EntityFrameworkCore;
     using ResQMe.Data;
     using ResQMe.Data.Models;
-    using ResQMe.ViewModels.Shelter;
     using ResQMe.Services.Core.Interfaces;
+    using ResQMe.ViewModels.Common;
+    using ResQMe.ViewModels.Shelter;
+
     public class ShelterService : IShelterService
     {
         private readonly ResQMeDbContext context;
@@ -14,11 +16,33 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<ShelterListViewModel>> GetAllSheltersAsync()
+        public async Task<PaginatedResultViewModel<ShelterListViewModel>> GetAllSheltersAsync(
+            string? searchTerm,
+            List<string> cities,
+            int page,
+            int pageSize)
         {
-            return await context.Shelters
+            var query = context.Shelters.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string term = searchTerm.Trim().ToLower();
+                query = query.Where(s => s.Name.ToLower().Contains(term));
+            }
+
+            if (cities.Any())
+            {
+                query = query.Where(s => cities.Contains(s.City));
+            }
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = await query
                 .OrderBy(s => s.City)
                 .ThenBy(s => s.Name)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(s => new ShelterListViewModel
                 {
                     Id = s.Id,
@@ -26,6 +50,23 @@
                     City = s.City,
                     ImageUrl = s.ImageUrl
                 })
+                .ToListAsync();
+
+            return new PaginatedResultViewModel<ShelterListViewModel>
+            {
+                Items = items,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                SearchTerm = searchTerm
+            };
+        }
+
+        public async Task<IEnumerable<string>> GetUniqueCitiesAsync()
+        {
+            return await context.Shelters
+                .Select(s => s.City)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToListAsync();
         }
 

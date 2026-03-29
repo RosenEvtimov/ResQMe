@@ -50,11 +50,12 @@
                    asp-controller="Shelter"
                    asp-action="Details"
                    asp-route-id="@ViewBag.FromShelterId"
+                   asp-route-returnUrl="@ViewBag.ShelterReturnUrl"
                    class="btn btn-secondary mt-3">
                     Back to Shelter Details
                 </a>
             }
-            else if (!string.IsNullOrEmpty(ViewBag.ReturnUrl as string))
+            else if (ViewBag.HasActiveFilters == true)
             {
                 <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
                     Back to Filtered Animals
@@ -62,10 +63,7 @@
             }
             else
             {
-                <a asp-area=""
-                   asp-controller="Animal"
-                   asp-action="Index"
-                   class="btn btn-secondary mt-3">
+                <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">        
                     Back to All Animals
                 </a>
             }

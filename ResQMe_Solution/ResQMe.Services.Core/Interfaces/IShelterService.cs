@@ -1,10 +1,17 @@
 ﻿namespace ResQMe.Services.Core.Interfaces
 {
+    using ResQMe.ViewModels.Common;
     using ResQMe.ViewModels.Shelter;
 
     public interface IShelterService
     {
-        Task<IEnumerable<ShelterListViewModel>> GetAllSheltersAsync();
+        Task<PaginatedResultViewModel<ShelterListViewModel>> GetAllSheltersAsync(
+            string? searchTerm,
+            List<string> cities,
+            int page,
+            int pageSize);
+
+        Task<IEnumerable<string>> GetUniqueCitiesAsync();
 
         Task<ShelterDetailsViewModel?> GetShelterDetailsAsync(int id);
 
