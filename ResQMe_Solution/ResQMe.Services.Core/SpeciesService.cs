@@ -4,6 +4,7 @@
     using ResQMe.Data;
     using ResQMe.Data.Models;
     using ResQMe.Services.Core.Interfaces;
+    using ResQMe.ViewModels.Common;
     using ResQMe.ViewModels.Species;
 
     public class SpeciesService : ISpeciesService
@@ -15,16 +16,40 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<SpeciesListViewModel>> GetAllSpeciesAsync()
+        public async Task<PaginatedResultViewModel<SpeciesListViewModel>> GetAllSpeciesAsync(
+            string? searchTerm,
+            int page,
+            int pageSize)
         {
-            return await context.Species
+            var query = context.Species.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string term = searchTerm.Trim().ToLower();
+                query = query.Where(s => s.Name.ToLower().Contains(term));
+            }
+
+            int totalItems = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = await query
                 .OrderBy(s => s.Name)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(s => new SpeciesListViewModel
                 {
                     Id = s.Id,
                     Name = s.Name
                 })
                 .ToListAsync();
+
+            return new PaginatedResultViewModel<SpeciesListViewModel>
+            {
+                Items = items,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                SearchTerm = searchTerm
+            };
         }
 
         public async Task<SpeciesFormViewModel?> GetSpeciesForEditAsync(int id)

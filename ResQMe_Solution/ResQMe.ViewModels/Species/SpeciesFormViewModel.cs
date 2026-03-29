@@ -10,5 +10,7 @@
         [Required]
         [StringLength(MaxSpeciesNameLength, MinimumLength = MinSpeciesNameLength)]
         public string Name { get; set; } = null!;
+
+        public string? ReturnUrl { get; set; }
     }
 }

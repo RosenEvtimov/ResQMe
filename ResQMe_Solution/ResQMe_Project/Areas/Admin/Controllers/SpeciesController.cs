@@ -17,16 +17,18 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchTerm, int page = 1)
         {
-            var model = await speciesService.GetAllSpeciesAsync();
+            const int pageSize = 10;
+            var model = await speciesService.GetAllSpeciesAsync(searchTerm, page, pageSize);
+            ViewBag.SearchTerm = searchTerm;
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Add(string? returnUrl)
         {
-            return View(new SpeciesFormViewModel());
+            return View(new SpeciesFormViewModel { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
@@ -41,7 +43,7 @@
             try
             {
                 await speciesService.AddSpeciesAsync(model);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Admin/Species/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -51,7 +53,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, string? returnUrl)
         {
             var model = await speciesService.GetSpeciesForEditAsync(id);
 
@@ -59,6 +61,8 @@
             {
                 return NotFound();
             }
+
+            model.ReturnUrl = returnUrl;
 
             return View(model);
         }
@@ -75,7 +79,7 @@
             try
             {
                 await speciesService.EditSpeciesAsync(model);
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Admin/Species/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
             {
@@ -85,7 +89,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, string? returnUrl)
         {
             var model = await speciesService.GetSpeciesForEditAsync(id);
 
@@ -94,12 +98,14 @@
                 return NotFound();
             }
 
+            model.ReturnUrl = returnUrl;
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string? returnUrl)
         {
             bool deleted = await speciesService.DeleteSpeciesAsync(id);
 
@@ -112,13 +118,15 @@
                     return NotFound();
                 }
 
+                model.ReturnUrl = returnUrl;
+
                 ModelState.AddModelError(string.Empty,
                     "You cannot delete this species, because there are animals assigned to it.");
 
                 return View("Delete", model);
             }
 
-            return RedirectToAction(nameof(Index));
+            return Redirect("/Admin/Species/Index" + returnUrl);
         }
     }
 }

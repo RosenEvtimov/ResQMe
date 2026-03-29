@@ -1,10 +1,14 @@
 ﻿namespace ResQMe.Services.Core.Interfaces
 {
+    using ResQMe.ViewModels.Common;
     using ResQMe.ViewModels.Species;
 
     public interface ISpeciesService
     {
-        Task<IEnumerable<SpeciesListViewModel>> GetAllSpeciesAsync();
+        Task<PaginatedResultViewModel<SpeciesListViewModel>> GetAllSpeciesAsync(
+            string? searchTerm,
+            int page,
+            int pageSize);
 
         Task<SpeciesFormViewModel?> GetSpeciesForEditAsync(int id);
 

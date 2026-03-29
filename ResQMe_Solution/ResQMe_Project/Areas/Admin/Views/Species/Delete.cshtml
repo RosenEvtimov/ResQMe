@@ -11,6 +11,14 @@
 
 <form asp-action="DeleteConfirmed" method="post">
     <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+    <button type="submit" class="btn btn-danger">
+        Delete
+    </button>
+
+    <a href="@($"/Admin/Species/Index{Model.ReturnUrl}")"
+       class="btn btn-secondary">
+        Cancel
+    </a>
 </form>
