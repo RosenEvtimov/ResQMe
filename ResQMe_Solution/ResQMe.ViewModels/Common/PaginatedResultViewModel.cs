@@ -9,5 +9,7 @@
 
         public bool HasPreviousPage => CurrentPage > 1;
         public bool HasNextPage => CurrentPage < TotalPages;
+
+        public int? TotalItems { get; set; }
     }
 }

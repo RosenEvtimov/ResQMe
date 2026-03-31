@@ -10,9 +10,11 @@
     </div>
 }
 
-<h2>@ViewBag.CurrentStatus.ToString() adoption requests</h2>
+<h2>
+    @ViewBag.CurrentStatus.ToString() adoption requests
+</h2>
 
-<!-- Filter -->
+<!-- Filter + requests badge -->
 <form method="get" id="filterForm" class="mb-3">
     <select name="status"
             class="form-select w-auto d-inline"
@@ -22,6 +24,8 @@
         <option value="Approved" selected="@(ViewBag.CurrentStatus?.ToString() == "Approved")">Approved</option>
         <option value="Rejected" selected="@(ViewBag.CurrentStatus?.ToString() == "Rejected")">Rejected</option>
     </select>
+    
+    <span class="badge bg-primary ms-2">Count: @Model.TotalItems</span>
 </form>
 
 <!-- Main content -->

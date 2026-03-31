@@ -110,7 +110,8 @@
             {
                 Items = items,
                 CurrentPage = page,
-                TotalPages = totalPages
+                TotalPages = totalPages,
+                TotalItems = totalItems
             };
         }
 
