@@ -43,6 +43,9 @@
             try
             {
                 await speciesService.AddSpeciesAsync(model);
+
+                TempData["AdminSuccess"] = "Species added successfully!";
+
                 return Redirect("/Admin/Species/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
@@ -79,6 +82,9 @@
             try
             {
                 await speciesService.EditSpeciesAsync(model);
+
+                TempData["AdminSuccess"] = "Species edited successfully!";
+
                 return Redirect("/Admin/Species/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
@@ -125,6 +131,8 @@
 
                 return View("Delete", model);
             }
+
+            TempData["AdminSuccess"] = "Species deleted successfully!";
 
             return Redirect("/Admin/Species/Index" + returnUrl);
         }

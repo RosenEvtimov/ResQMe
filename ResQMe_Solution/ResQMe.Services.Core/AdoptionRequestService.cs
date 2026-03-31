@@ -135,7 +135,9 @@
                     Email = ar.User.Email!,
                     PhoneNumber = ar.User.PhoneNumber!,
                     Address = ar.User.Address!,
-                    City = ar.User.City!
+                    City = ar.User.City!,
+
+                    IsAnimalAdopted = ar.Animal.IsAdopted
                 })
                 .FirstOrDefaultAsync();
         }

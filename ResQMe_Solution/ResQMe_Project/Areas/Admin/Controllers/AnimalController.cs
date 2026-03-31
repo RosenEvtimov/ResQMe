@@ -58,6 +58,8 @@
 
             await animalService.AddAnimalAsync(model);
 
+            TempData["AdminSuccess"] = "Animal added successfully!";
+
             return Redirect("/Animal/Index" + model.ReturnUrl);
         }
 
@@ -103,6 +105,8 @@
 
             await animalService.EditAnimalAsync(model);
 
+            TempData["AdminSuccess"] = "Animal edited successfully!";
+
             return Redirect("/Animal/Index" + model.ReturnUrl);
         }
 
@@ -143,6 +147,8 @@
 
                 return View("Delete", model);
             }
+
+            TempData["AdminSuccess"] = "Animal deleted successfully!";
 
             return Redirect("/Animal/Index" + returnUrl);
         }

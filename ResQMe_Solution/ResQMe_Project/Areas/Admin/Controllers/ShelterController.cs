@@ -34,6 +34,9 @@
             try
             {
                 await shelterService.AddShelterAsync(model);
+
+                TempData["AdminSuccess"] = "Shelter added successfully!";
+
                 return Redirect("/Shelter/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
@@ -70,6 +73,9 @@
             try
             {
                 await shelterService.EditShelterAsync(model);
+
+                TempData["AdminSuccess"] = "Shelter edited successfully!";
+
                 return Redirect("/Shelter/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
@@ -116,6 +122,8 @@
 
                 return View("Delete", model);
             }
+
+            TempData["AdminSuccess"] = "Shelter deleted successfully!";
 
             return Redirect("/Shelter/Index" + returnUrl);
         }

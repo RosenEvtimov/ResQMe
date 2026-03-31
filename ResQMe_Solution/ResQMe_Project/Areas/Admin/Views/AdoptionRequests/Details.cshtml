@@ -2,6 +2,13 @@
 @using ResQMe.Data.Models.Enums
 @model AdoptionRequestAdminDetailsViewModel
 
+@if (Model.IsAnimalAdopted && Model.Status == AdoptionRequestStatus.Pending)
+{
+    <div class="alert alert-warning">
+        This animal has already been adopted by another applicant. This request cannot be approved.
+    </div>
+}
+
 <h2>Adoption request details</h2>
 
 <div class="card p-4">
@@ -34,15 +41,18 @@
 
     @if (Model.Status == AdoptionRequestStatus.Pending)
     {
-        <form asp-action="Approve" method="post" class="d-inline">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
-            <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
+        if (!Model.IsAnimalAdopted)
+        {
+            <form asp-action="Approve" method="post" class="d-inline">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
+                <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
 
-            <button type="submit" class="btn btn-success">
-                Approve
-            </button>
-        </form>
+                <button type="submit" class="btn btn-success">
+                    Approve
+                </button>
+            </form>
+        }
 
         <form asp-action="Reject" method="post" class="d-inline">
             <input type="hidden" name="id" value="@Model.Id" />

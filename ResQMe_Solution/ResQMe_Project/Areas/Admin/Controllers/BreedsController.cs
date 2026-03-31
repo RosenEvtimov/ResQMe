@@ -62,6 +62,9 @@
             try
             {
                 await breedService.AddBreedAsync(model);
+
+                TempData["AdminSuccess"] = "Breed added successfully!";
+
                 return Redirect("/Admin/Breeds/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
@@ -101,6 +104,9 @@
             try
             {
                 await breedService.EditBreedAsync(model);
+
+                TempData["AdminSuccess"] = "Breed edited successfully!";
+
                 return Redirect("/Admin/Breeds/Index" + model.ReturnUrl);
             }
             catch (InvalidOperationException ex)
@@ -148,6 +154,8 @@
 
                 return View("Delete", model);
             }
+
+            TempData["AdminSuccess"] = "Breed deleted successfully!";
 
             return Redirect("/Admin/Breeds/Index" + returnUrl);
         }

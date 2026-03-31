@@ -24,5 +24,7 @@
         public DateTime CreatedOn { get; set; }
 
         public AdoptionRequestStatus Status { get; set; }
+
+        public bool IsAnimalAdopted { get; set; }
     }
 }

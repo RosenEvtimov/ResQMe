@@ -2,6 +2,13 @@
 @using ResQMe.ViewModels.Common
 @model PaginatedResultViewModel<ShelterListViewModel>
 
+@if (TempData["AdminSuccess"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["AdminSuccess"]
+    </div>
+}
+
 <div class="row mt-3">
 
     <!-- Sidebar Filters -->
