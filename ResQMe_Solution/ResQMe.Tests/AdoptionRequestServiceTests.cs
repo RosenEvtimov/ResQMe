@@ -17,8 +17,9 @@
     {
         private DbContextOptions<ResQMeDbContext> CreateOptions(string dbName)
         {
+            var uniqueName = $"{GetType().Name}_{dbName}";
             return new DbContextOptionsBuilder<ResQMeDbContext>()
-                .UseInMemoryDatabase(databaseName: dbName)
+                .UseInMemoryDatabase(databaseName: uniqueName)
                 .Options;
         }
 
