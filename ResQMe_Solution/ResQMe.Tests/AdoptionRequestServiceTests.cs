@@ -1,8 +1,5 @@
 ﻿namespace ResQMe.Tests
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using NUnit.Framework;
     using ResQMe.Data;
@@ -11,6 +8,9 @@
     using ResQMe.Data.Models.Identity;
     using ResQMe.Services.Core;
     using ResQMe.ViewModels.AdoptionRequest;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class AdoptionRequestServiceTests
@@ -179,9 +179,9 @@
         }
 
         [Test]
-        public async Task GetMyRequestsAsync_Returns_User_Requests_Ordered()
+        public async Task GetMyRequestsAsync_Returns_All_User_Requests_Ordered()
         {
-            var dbName = nameof(GetMyRequestsAsync_Returns_User_Requests_Ordered);
+            var dbName = nameof(GetMyRequestsAsync_Returns_All_User_Requests_Ordered);
 
             using (var context = CreateContext(dbName))
             {
@@ -215,9 +215,9 @@
 
         /* Admin methods tests */
         [Test]
-        public async Task GetAllRequestsForAdminAsync_Returns_Pagination_And_Filtering()
+        public async Task GetAllRequestsForAdminAsync_Returns_Correct_Result_Through_Pagination_And_Filtering()
         {
-            var dbName = nameof(GetAllRequestsForAdminAsync_Returns_Pagination_And_Filtering);
+            var dbName = nameof(GetAllRequestsForAdminAsync_Returns_Correct_Result_Through_Pagination_And_Filtering);
 
             using (var context = CreateContext(dbName))
             {
@@ -263,9 +263,9 @@
         }
 
         [Test]
-        public async Task GetRequestByIdForAdminAsync_Returns_Detailed_ViewModel_Including_AnimalAdoptedFlag()
+        public async Task GetRequestByIdForAdminAsync_Returns_Correct_Result_Including_Animal_IsAdopted_Flag()
         {
-            var dbName = nameof(GetRequestByIdForAdminAsync_Returns_Detailed_ViewModel_Including_AnimalAdoptedFlag);
+            var dbName = nameof(GetRequestByIdForAdminAsync_Returns_Correct_Result_Including_Animal_IsAdopted_Flag);
 
             using (var ctx = CreateContext(dbName))
             {
@@ -351,9 +351,9 @@
         }
 
         [Test]
-        public async Task ApproveRequestAsync_Does_Not_Approve_When_Animal_Already_Adopted()
+        public async Task ApproveRequestAsync_Should_Not_Approve_The_Request_When_The_Animal_Is_Already_Adopted()
         {
-            var dbName = nameof(ApproveRequestAsync_Does_Not_Approve_When_Animal_Already_Adopted);
+            var dbName = nameof(ApproveRequestAsync_Should_Not_Approve_The_Request_When_The_Animal_Is_Already_Adopted);
 
             using (var context = CreateContext(dbName))
             {
@@ -422,9 +422,9 @@
         }
 
         [Test]
-        public async Task UndoApprovalAsync_Reopens_Rejected_Request_And_Makes_Animal_Available()
+        public async Task UndoApprovalAsync_Should_Set_Current_Request_To_Pending_Reopen_Rejected_Requests_And_Make_Animal_Available()
         {
-            var dbName = nameof(UndoApprovalAsync_Reopens_Rejected_Request_And_Makes_Animal_Available);
+            var dbName = nameof(UndoApprovalAsync_Should_Set_Current_Request_To_Pending_Reopen_Rejected_Requests_And_Make_Animal_Available);
 
             using (var context = CreateContext(dbName))
             {
@@ -457,9 +457,9 @@
         }
 
         [Test]
-        public async Task UndoRejectionAsync_Should_Set_Request_To_Pending()
+        public async Task UndoRejectionAsync_Should_Set_Current_Request_To_Pending()
         {
-            var dbName = nameof(UndoRejectionAsync_Should_Set_Request_To_Pending);
+            var dbName = nameof(UndoRejectionAsync_Should_Set_Current_Request_To_Pending);
 
             using (var context = CreateContext(dbName))
             {

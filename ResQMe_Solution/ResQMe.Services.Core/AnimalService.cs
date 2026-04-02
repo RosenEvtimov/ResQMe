@@ -156,7 +156,6 @@
                     ShelterEmail = a.Shelter.Email
                 })
                 .FirstOrDefaultAsync();
-
         }
 
         public async Task<AnimalFormViewModel?> GetAnimalForEditAsync(int id)
@@ -179,7 +178,6 @@
                 })
                 .FirstOrDefaultAsync();
         }
-
 
         public async Task AddAnimalAsync(AnimalFormViewModel model)
         {
@@ -276,7 +274,6 @@
                 .ToListAsync();
         }
 
-
         /* Shelters Dropdown */
         public async Task<IEnumerable<DropdownItemViewModel>> GetSheltersForDropdownAsync()
         {
@@ -288,6 +285,5 @@
                 })
                 .ToListAsync();
         }
-
     }
 }
