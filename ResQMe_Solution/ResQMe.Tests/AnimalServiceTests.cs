@@ -150,9 +150,9 @@
         }
 
         [Test]
-        public async Task GetAnimalDetailsAsync_Returns_Correct_Animal_Info()
+        public async Task GetAnimalDetailsAsync_Returns_Correct_Details()
         {
-            var dbName = nameof(GetAnimalDetailsAsync_Returns_Correct_Animal_Info);
+            var dbName = nameof(GetAnimalDetailsAsync_Returns_Correct_Details);
 
             using (var context = CreateContext(dbName))
             {
