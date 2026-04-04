@@ -75,7 +75,7 @@
             ViewBag.FromShelterId = fromShelterId;
             ViewBag.ShelterReturnUrl = shelterReturnUrl;
 
-            /* Checking if the query is empty or not, for correct button visualisation on the Details View */
+            /* Checking if the search query is empty or not, for correct "back to ..." button visualisation on the Details View */
             var qs = Request.QueryString.Value;
             bool hasActiveFilters = false;
 

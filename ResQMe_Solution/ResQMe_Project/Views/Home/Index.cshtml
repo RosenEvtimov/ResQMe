@@ -1,7 +1,43 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div class="text-center py-5">
+    <h1 class="display-3 fw-bold mb-3">Find your furever friend</h1>
+    <p class="lead mb-4" style="max-width:650px; margin:auto;">
+        ResQMe connects loving families with animals in need of a forever home.
+        Browse our shelters, meet amazing animals, and make a difference today.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a asp-area="" asp-controller="Animal" asp-action="Index" class="btn btn-primary btn-lg px-4">
+            Browse Animals
+        </a>
+        <a asp-area="" asp-controller="Shelter" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">
+            View Shelters
+        </a>
+    </div>
+</div>
+
+<div class="row text-center mt-5 g-4">
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <div class="fs-1 mb-3">🐶</div>
+            <h5 class="fw-bold">Hundreds of Animals</h5>
+            <p class="text-muted">Dogs, cats and more — all waiting for a loving home.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <div class="fs-1 mb-3">🏠</div>
+            <h5 class="fw-bold">Trusted Shelters</h5>
+            <p class="text-muted">We partner with verified shelters and rescue organisations.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <div class="fs-1 mb-3">❤️</div>
+            <h5 class="fw-bold">Easy Adoption</h5>
+            <p class="text-muted">Browse, apply, and get matched — all in one place.</p>
+        </div>
+    </div>
 </div>

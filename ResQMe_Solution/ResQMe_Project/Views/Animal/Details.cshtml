@@ -1,73 +1,64 @@
 ﻿@model ResQMe.ViewModels.Animal.AnimalDetailsViewModel
 
 <div class="container mt-4">
+    <!-- Back button at the top -->
+    <div class="mb-3">
+        @if (ViewBag.FromShelterId != null)
+        {
+            <a asp-area="" asp-controller="Shelter" asp-action="Details"
+               asp-route-id="@ViewBag.FromShelterId"
+               asp-route-returnUrl="@ViewBag.ShelterReturnUrl"
+               class="btn btn-outline-secondary btn-sm">
+                ← Back to Shelter
+            </a>
+        }
+        else if (ViewBag.HasActiveFilters == true)
+        {
+            <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-outline-secondary btn-sm">
+                ← Back to Filtered Animals
+            </a>
+        }
+        else
+        {
+            <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-outline-secondary btn-sm">
+                ← Back to All Animals
+            </a>
+        }
+    </div>
+
     <div class="row">
-
         <div class="col-md-6">
-            <img src="@Model.ImageUrl"
-                 class="img-fluid rounded"
-                 style="height:400px; width:100%; object-fit:cover;" />
+            <img src="@Model.ImageUrl" class="img-fluid rounded"
+                 style="height:420px; width:100%; object-fit:cover;" />
         </div>
-
         <div class="col-md-6">
-            <h2>@Model.Name</h2>
-
+            <h2 class="fw-bold">@Model.Name</h2>
             <p>
-				<strong>Age:</strong> @Model.Age <br />
-                <strong>Gender:</strong> @Model.Gender <br />
-                <strong>Breed:</strong> @Model.BreedDisplay <br />
+                <strong>Age:</strong> @Model.Age years<br />
+                <strong>Gender:</strong> @Model.Gender<br />
+                <strong>Breed:</strong> @Model.BreedDisplay<br />
                 <strong>Species:</strong> @Model.Species
             </p>
-
             @if (Model.IsAdopted)
             {
-                <span class="badge bg-danger">Adopted</span>
+                <span class="badge bg-danger mb-3">Adopted</span>
             }
             else
             {
-                <span class="badge bg-success">Available for adoption</span>
+                <span class="badge bg-success mb-3">Available for adoption</span>
             }
-
             <hr />
-
             <h5>Description</h5>
             <p>@Model.Description</p>
-
             <hr />
-
             <h5>Shelter Information</h5>
             <p>
-                <strong>Name:</strong> @Model.ShelterName <br />
-                <strong>City:</strong> @Model.ShelterCity <br />
-                <strong>Address:</strong> @Model.ShelterAddress <br />
-                <strong>Phone:</strong> @Model.ShelterPhone <br />
+                <strong>Name:</strong> @Model.ShelterName<br />
+                <strong>City:</strong> @Model.ShelterCity<br />
+                <strong>Address:</strong> @Model.ShelterAddress<br />
+                <strong>Phone:</strong> @Model.ShelterPhone<br />
                 <strong>Email:</strong> @Model.ShelterEmail
             </p>
-
-            @if (ViewBag.FromShelterId != null)
-            {
-                <a asp-area=""
-                   asp-controller="Shelter"
-                   asp-action="Details"
-                   asp-route-id="@ViewBag.FromShelterId"
-                   asp-route-returnUrl="@ViewBag.ShelterReturnUrl"
-                   class="btn btn-secondary mt-3">
-                    Back to Shelter Details
-                </a>
-            }
-            else if (ViewBag.HasActiveFilters == true)
-            {
-                <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
-                    Back to Filtered Animals
-                </a>
-            }
-            else
-            {
-                <a href="@($"/Animal/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">        
-                    Back to All Animals
-                </a>
-            }
-
             @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("User") && !Model.IsAdopted)
             {
                 if (ViewBag.HasAlreadyRequested != null && (bool)ViewBag.HasAlreadyRequested)
@@ -78,16 +69,13 @@
                 }
                 else
                 {
-                    <a asp-area=""
-                       asp-controller="AdoptionRequest"
-                       asp-action="Create"
+                    <a asp-area="" asp-controller="AdoptionRequest" asp-action="Create"
                        asp-route-animalId="@Model.Id"
-                       class="btn btn-success mt-3">
-                        Adopt Me
+                       class="btn btn-success mt-2">
+                        🐾 Adopt Me
                     </a>
                 }
             }
         </div>
-
     </div>
 </div>

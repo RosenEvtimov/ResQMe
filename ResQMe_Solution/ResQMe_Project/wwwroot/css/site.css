@@ -1,28 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #fdf6ee;
+    font-family: 'Nunito', sans-serif;
+    color: #3d2c1e;
 }
 
+/* Navbar */
+.navbar {
+    background-color: #7b4f2e !important;
+    padding: 0.75rem 1rem;
+}
+
+.navbar-brand {
+    color: #fff !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: #f5dfc5 !important;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 0.85rem !important;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0.85rem;
+        right: 0.85rem;
+        height: 2px;
+        background-color: #f5dfc5;
+        transform: scaleX(0);
+        transition: transform 0.2s ease;
+    }
+
+    .nav-link:hover {
+        color: #fff !important;
+    }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+/* Buttons */
+.btn {
+    border-radius: 20px;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .btn:focus, .btn:active:focus,
+    .btn-link.nav-link:focus,
+    .form-control:focus,
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #c8874a;
+    }
+
+/* Footer */
+.footer {
+    background-color: #7b4f2e;
+    color: #f5dfc5 !important;
+}
+
+    .footer a {
+        color: #f5dfc5 !important;
+    }
+
+/* Sidebar filter card */
+.filter-card {
+    background-color: #fff8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Accordion filter headers */
+.accordion-button {
+    background-color: #fff8f0;
+    color: #7b4f2e;
+    font-weight: 700;
+    border-radius: 8px !important;
+}
+
+    .accordion-button:not(.collapsed) {
+        background-color: #f5dfc5;
+        color: #5a3520;
+        box-shadow: none;
+    }
+
+    .accordion-button::after {
+        filter: invert(40%) sepia(30%) saturate(500%) hue-rotate(10deg);
+    }
+
+.accordion-item {
+    border: none;
+    background-color: transparent;
+    margin-bottom: 4px;
+}
+
+/* Page headings */
+h2 {
+    color: #5a3520;
+    font-weight: 700;
+}
+
+/* Animal image consistent height */
 .animal-image {
     height: 220px;
     width: 100%;
     object-fit: cover;
 }
+
+/* Badge tweaks */
+.badge {
+    border-radius: 20px;
+    font-size: 0.8rem;
+    padding: 0.4em 0.8em;
+}
+
+/* Pagination */
+.page-link {
+    color: #7b4f2e;
+    border-radius: 8px !important;
+    margin: 0 2px;
+}
+
+.page-item.active .page-link {
+    background-color: #7b4f2e;
+    border-color: #7b4f2e;
+}
+
+.page-link:hover {
+    background-color: #f5dfc5;
+    color: #5a3520;
+}
+
+/* Privacy policy page */
+.privacy-container {
+    max-width: 900px;
+}
+
+.policy-section {
+    margin-top: 20px;
+}
+
+    .policy-section ul {
+        margin-top: 8px;
+    }

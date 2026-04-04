@@ -1,16 +1,12 @@
 ﻿@using ResQMe.ViewModels.AdoptionRequest
 @model IEnumerable<MyAdoptionRequestsViewModel>
 
-<h2>My adoption requests</h2>
+<h2 class="fw-bold mb-4">My adoption requests</h2>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">
-        You haven't submitted any adoption requests yet.
-    </div>
-    <a asp-controller="Animal" asp-action="Index" class="btn btn-primary">
-        Browse Animals
-    </a>
+    <div class="alert alert-info">You haven't submitted any adoption requests yet.</div>
+    <a asp-controller="Animal" asp-action="Index" class="btn btn-primary">Browse Animals</a>
 }
 else
 {
@@ -21,16 +17,17 @@ else
                 <div class="card">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="@request.AnimalImageUrl"
-                                 class="img-fluid rounded-start"
-                                 style="height: 200px; width: 100%; object-fit: cover;"
-                                 alt="@request.AnimalName" />
+                            <img src="@request.AnimalImageUrl" class="img-fluid rounded-start"
+                                 style="height:160px; width:100%; object-fit:cover;" alt="@request.AnimalName" />
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">@request.AnimalName</h5>
+                                <h5 class="card-title fw-bold">@request.AnimalName</h5>
+                                <p class="card-text mb-1">
+                                    <strong>Submitted:</strong>
+                                    @request.CreatedOn.ToString("dd MMMM yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                </p>
                                 <p class="card-text">
-                                    <strong>Submitted:</strong> @request.CreatedOn.ToString("dd MMMM yyyy", System.Globalization.CultureInfo.InvariantCulture) <br />
                                     <strong>Status:</strong>
                                     @if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Pending)
                                     {
@@ -38,7 +35,7 @@ else
                                     }
                                     else if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Approved)
                                     {
-                                        <span class="badge bg-success">Approved</span>
+                                        <span class="badge bg-success">Approved 🎉</span>
                                     }
                                     else
                                     {

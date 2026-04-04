@@ -1,50 +1,44 @@
 ﻿@model ResQMe.ViewModels.Shelter.ShelterDetailsViewModel
 
 <div class="container mt-4">
+    <div class="mb-3">
+        @if (ViewBag.HasActiveFilters == true)
+        {
+            <a href="@($"/Shelter/Index{ViewBag.ReturnUrl}")" class="btn btn-outline-secondary btn-sm">
+                ← Back to Filtered Shelters
+            </a>
+        }
+        else
+        {
+            <a href="@($"/Shelter/Index{ViewBag.ReturnUrl}")" class="btn btn-outline-secondary btn-sm">
+                ← Back to All Shelters
+            </a>
+        }
+    </div>
 
     <div class="row">
         <div class="col-md-6">
-            <img src="@Model.ImageUrl"
-                 class="img-fluid rounded"
-                 style="height:400px; object-fit:cover;" />
+            <img src="@Model.ImageUrl" class="img-fluid rounded"
+                 style="height:400px; width:100%; object-fit:cover;" />
         </div>
-
         <div class="col-md-6">
-            <h2>@Model.Name</h2>
-
+            <h2 class="fw-bold">@Model.Name</h2>
             <p>
-                <strong>City:</strong> @Model.City <br />
-                <strong>Address:</strong> @Model.Address <br />
-                <strong>Phone:</strong> @Model.Phone <br />
+                <strong>City:</strong> @Model.City<br />
+                <strong>Address:</strong> @Model.Address<br />
+                <strong>Phone:</strong> @Model.Phone<br />
                 <strong>Email:</strong> @Model.Email
             </p>
-
-            <p>@Model.Description</p>
-
-            @if (ViewBag.HasActiveFilters == true)
-            {
-                <a href="@($"/Shelter/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
-                    Back to Filtered Shelters
-                </a>
-            }
-            else
-            {
-                <a href="@($"/Shelter/Index{ViewBag.ReturnUrl}")" class="btn btn-secondary mt-3">
-                    Back to All Shelters
-                </a>
-            }
+            <p class="text-muted">@Model.Description</p>
         </div>
     </div>
 
-    <hr />
-
-    <h3>Available Animals</h3>
+    <hr class="mt-4" />
+    <h3 class="mb-3">Available Animals</h3>
 
     @if (!Model.Animals.Any())
     {
-        <div class="alert alert-info">
-            No animals currently available in this shelter.
-        </div>
+        <div class="alert alert-info">No animals currently available in this shelter.</div>
     }
     else
     {
@@ -52,32 +46,24 @@
             @foreach (var animal in Model.Animals)
             {
                 <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <img src="@animal.ImageUrl"
-                             class="card-img-top"
+                    <div class="card h-100">
+                        <img src="@animal.ImageUrl" class="card-img-top"
                              style="height:150px; object-fit:cover;" />
-
-                        <div class="card-body">
-                            <h6>@animal.Name</h6>
-                            <p>
-                                Age: @animal.Age <br />
-                                Gender: @animal.Gender
-                            </p>
-
-                            <a asp-area=""
-                               asp-controller="Animal"
-                               asp-action="Details"
-                               asp-route-id="@animal.Id"
-                               asp-route-fromShelterId="@Model.Id"
-                               asp-route-shelterReturnUrl="@ViewBag.ReturnUrl"
-                               class="btn btn-primary btn-sm">
-                                View
-                            </a>
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="fw-bold">@animal.Name</h6>
+                            <p class="mb-1">Age: @animal.Age</p>
+                            <p class="mb-2">Gender: @animal.Gender</p>
+                            <div class="mt-auto">
+                                <a asp-area="" asp-controller="Animal" asp-action="Details"
+                                   asp-route-id="@animal.Id"
+                                   asp-route-fromShelterId="@Model.Id"
+                                   asp-route-shelterReturnUrl="@ViewBag.ReturnUrl"
+                                   class="btn btn-primary btn-sm">View</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
     }
-
 </div>

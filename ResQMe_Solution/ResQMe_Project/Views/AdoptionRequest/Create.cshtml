@@ -1,24 +1,36 @@
 ﻿@model ResQMe.ViewModels.AdoptionRequest.AdoptionRequestFormViewModel
 
-<h2>Send adoption request</h2>
+<div class="container mt-4" style="max-width:600px;">
+    <h2 class="fw-bold mb-4">🐾 Send Adoption Request</h2>
+    <div class="card p-4">
+        <form asp-action="Create" method="post">
+            <input type="hidden" asp-for="AnimalId" />
+            <div class="mb-3">
+                <label class="form-label fw-bold">Previous adoption experience</label>
+                <select asp-for="PreviousAdoptionExperience"
+                        asp-items="Html.GetEnumSelectList<ResQMe.Data.Models.Enums.PreviousAdoptionExperience>()"
+                        class="form-control">
+                    <option value="">-- Please Select Your Experience Level --</option>
+                </select>
+                <span asp-validation-for="PreviousAdoptionExperience" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold" asp-for="Message">Message</label>
+                <textarea asp-for="Message" class="form-control" rows="4"
+                          placeholder="Tell us a little about yourself and why you'd like to adopt..."></textarea>
+            </div>
 
-<form asp-action="Create" method="post">
-    <input type="hidden" asp-for="AnimalId" />
+            <button type="submit" class="btn btn-success">Send Request</button>
 
-    <div class="mb-3">
-        <label class="form-label">Previous adoption experience</label>
-        <select asp-for="PreviousAdoptionExperience"
-                asp-items="Html.GetEnumSelectList<ResQMe.Data.Models.Enums.PreviousAdoptionExperience>()"
-                class="form-control">
-            <option value="">-- Select Experience --</option>
-        </select>
-        <span asp-validation-for="PreviousAdoptionExperience" class="text-danger"></span>
+            <a asp-area="" asp-controller="Animal" asp-action="Details"
+               asp-route-id="@Model.AnimalId"
+               class="btn btn-secondary">
+               Cancel
+            </a>
+        </form>
     </div>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label" asp-for="Message"></label>
-        <textarea asp-for="Message" class="form-control"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-success">Send Request</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
