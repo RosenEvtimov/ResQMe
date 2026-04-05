@@ -6,6 +6,8 @@
     {
         public int Id { get; set; }
 
+        public int AnimalId { get; set; }
+
         public string AnimalName { get; set; } = null!;
 
         public string AnimalImageUrl { get; set; } = null!;

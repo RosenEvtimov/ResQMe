@@ -15,10 +15,10 @@
     <div class="col-md-3">
         <form method="get" id="filterForm">
             <div class="filter-card p-3 mb-3">
+                <h6 class="fw-bold mb-3" style="color:#7b4f2e;">Filters</h6>
 
                 <!-- Search -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold mb-3" style="color:#7b4f2e;">Filters</label>
                     <input type="text"
                            name="searchTerm"
                            value="@ViewBag.SearchTerm"
@@ -26,33 +26,44 @@
                            class="form-control form-control-sm" />
                 </div>
 
-                <!-- Species -->
-                <div class="mb-3">
-                    <div class="fw-500 mb-2">Species</div>
-                    @foreach (var species in (IEnumerable<ResQMe.ViewModels.Common.DropdownItemViewModel>)ViewBag.AvailableSpecies)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   name="selectedSpeciesIds"
-                                   value="@species.Id"
-                                   id="species_@species.Id"
-                                   @(((List<int>)ViewBag.SelectedSpeciesIds).Contains(species.Id) ? "checked" : "") />
-                            <label class="form-check-label" for="species_@species.Id">
-                                @species.Name
-                            </label>
+                <div class="accordion" id="breedFilterAccordion">
+                    <!-- Species -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button @(((List<int>)ViewBag.SelectedSpeciesIds).Any() ? "" : "collapsed") py-2"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecies">
+                                Species
+                            </button>
+                        </h2>
+                        <div id="collapseSpecies"
+                             class="accordion-collapse collapse @(((List<int>)ViewBag.SelectedSpeciesIds).Any() ? "show" : "")">
+                            <div class="accordion-body py-2">
+                                @foreach (var species in (IEnumerable<ResQMe.ViewModels.Common.DropdownItemViewModel>)ViewBag.AvailableSpecies)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="selectedSpeciesIds"
+                                               value="@species.Id"
+                                               id="species_@species.Id"
+                                               @(((List<int>)ViewBag.SelectedSpeciesIds).Contains(species.Id) ? "checked" : "") />
+                                        <label class="form-check-label" for="species_@species.Id">
+                                            @species.Name
+                                        </label>
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    }
+                    </div>
                 </div>
 
-                <!-- Buttons -->
-                <button type="submit" class="btn btn-primary btn-sm w-100 mb-2">
+                <button type="submit" class="btn btn-primary btn-sm w-100 mt-3 mb-2">
                     Apply Filters
                 </button>
+
                 <a asp-action="Index" class="btn btn-outline-secondary btn-sm w-100">
                     Clear All
                 </a>
-
             </div>
         </form>
     </div>

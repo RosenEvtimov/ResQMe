@@ -2,7 +2,8 @@
 {
     public enum PreviousAdoptionExperience
     {
-        No,
-        Yes
+        None,
+        Some,
+        Extensive
     }
 }

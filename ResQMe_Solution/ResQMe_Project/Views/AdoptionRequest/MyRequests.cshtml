@@ -14,40 +14,47 @@ else
         @foreach (var request in Model)
         {
             <div class="col-md-6 mb-3">
-                <div class="card card-static">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="@request.AnimalImageUrl"
-                                 class="img-fluid rounded-start"
-                                 style="height:160px; width:100%; object-fit:cover;"
-                                 alt="@request.AnimalName" />
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title fw-bold">@request.AnimalName</h5>
-                                <p class="card-text mb-1">
-                                    <strong>Submitted:</strong>
-                                    @request.CreatedOn.ToString("dd MMMM yyyy", System.Globalization.CultureInfo.InvariantCulture)
-                                </p>
-                                <p class="card-text">
-                                    <strong>Status:</strong>
-                                    @if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Pending)
-                                    {
-                                        <span class="badge bg-warning text-dark">⏳ Pending</span>
-                                    }
-                                    else if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Approved)
-                                    {
-                                        <span class="badge bg-success">🎉 Approved</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-danger">✗ Rejected</span>
-                                    }
-                                </p>
+                <a asp-area=""
+                   asp-controller="Animal"
+                   asp-action="Details"
+                   asp-route-id="@request.AnimalId"
+                   asp-route-returnUrl="/AdoptionRequest/MyRequests"
+                   class="text-decoration-none">
+                    <div class="card card-clickable">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="@request.AnimalImageUrl"
+                                     class="img-fluid rounded-start"
+                                     style="height:160px; width:100%; object-fit:cover;"
+                                     alt="@request.AnimalName" />
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold" style="color:#5a3520;">@request.AnimalName</h5>
+                                    <p class="card-text mb-1" style="color:#3d2c1e;">
+                                        <strong>Submitted:</strong>
+                                        @request.CreatedOn.ToString("dd MMMM yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                    </p>
+                                    <p class="card-text">
+                                        <strong style="color:#3d2c1e;">Status:</strong>
+                                        @if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Pending)
+                                        {
+                                            <span class="badge bg-warning text-dark">⏳ Pending</span>
+                                        }
+                                        else if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Approved)
+                                        {
+                                            <span class="badge bg-success">🎉 Approved</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">✗ Rejected</span>
+                                        }
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         }
     </div>

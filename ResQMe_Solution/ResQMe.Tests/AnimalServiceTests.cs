@@ -359,7 +359,7 @@
             using (var context = CreateContext(dbName))
             {
                 context.Animals.Add(new Animal { Id = 41, Name = "ToDelete", Age = 1, Gender = Gender.Male, SpeciesId = 1, BreedType = BreedType.Mixed, ShelterId = 1, Description = "d", ImageUrl = "u", IsAdopted = false });
-                context.AdoptionRequests.Add(new AdoptionRequest { Id = 500, AnimalId = 41, UserId = "u1", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "m", CreatedOn = DateTime.UtcNow, Status = AdoptionRequestStatus.Pending });
+                context.AdoptionRequests.Add(new AdoptionRequest { Id = 500, AnimalId = 41, UserId = "u1", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "m", CreatedOn = DateTime.UtcNow, Status = AdoptionRequestStatus.Pending });
 
                 await context.SaveChangesAsync();
             }

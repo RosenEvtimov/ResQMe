@@ -39,62 +39,64 @@
 
     <hr />
 
-    @if (Model.Status == AdoptionRequestStatus.Pending)
-    {
-        if (!Model.IsAnimalAdopted)
+    <div class="d-flex gap-2 flex-wrap mt-3">
+        @if (Model.Status == AdoptionRequestStatus.Pending)
         {
-            <form asp-action="Approve" method="post" class="d-inline">
+            if (!Model.IsAnimalAdopted)
+            {
+                <form asp-action="Approve" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
+                    <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
+
+                    <button type="submit" class="btn btn-success">
+                        Approve
+                    </button>
+                </form>
+            }
+
+            <form asp-action="Reject" method="post" class="d-inline">
                 <input type="hidden" name="id" value="@Model.Id" />
                 <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
                 <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
 
-                <button type="submit" class="btn btn-success">
-                    Approve
+                <button type="submit" class="btn btn-danger">
+                    Reject
                 </button>
             </form>
         }
 
-        <form asp-action="Reject" method="post" class="d-inline">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
-            <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
+        @if (Model.Status == AdoptionRequestStatus.Approved)
+        {
+            <form asp-action="UndoApproval" method="post" class="d-inline">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
+                <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
 
-            <button type="submit" class="btn btn-danger">
-                Reject
-            </button>
-        </form>
-    }
+                <button type="submit" class="btn btn-warning">
+                    Undo Approval
+                </button>
+            </form>
+        }
 
-    @if (Model.Status == AdoptionRequestStatus.Approved)
-    {
-        <form asp-action="UndoApproval" method="post" class="d-inline">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
-            <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
+        @if (Model.Status == AdoptionRequestStatus.Rejected)
+        {
+            <form asp-action="UndoRejection" method="post" class="d-inline">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
+                <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
 
-            <button type="submit" class="btn btn-warning">
-                Undo Approval
-            </button>
-        </form>
-    }
-    @if (Model.Status == AdoptionRequestStatus.Rejected)
-    {
-        <form asp-action="UndoRejection" method="post" class="d-inline">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="hidden" name="status" value="@ViewBag.CurrentStatus" />
-            <input type="hidden" name="page" value="@ViewBag.CurrentPage" />
+                <button type="submit" class="btn btn-warning">
+                    Undo Rejection
+                </button>
+            </form>
+        }
+    </div>
 
-            <button type="submit" class="btn btn-warning">
-                Undo Rejection
-            </button>
-        </form>
-    }
-
-    <a asp-action="Index" 
+    <a asp-action="Index"
        asp-route-status="@ViewBag.CurrentStatus"
        asp-route-page="@ViewBag.CurrentPage"
        class="btn btn-secondary mt-3">
         Back
     </a>
-
 </div>

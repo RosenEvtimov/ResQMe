@@ -64,6 +64,7 @@
                 .Select(ar => new MyAdoptionRequestsViewModel
                 {
                     Id = ar.Id,
+                    AnimalId = ar.AnimalId,
                     AnimalName = ar.Animal.Name,
                     AnimalImageUrl = ar.Animal.ImageUrl,
                     CreatedOn = ar.CreatedOn,

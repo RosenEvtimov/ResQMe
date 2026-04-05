@@ -68,7 +68,7 @@
                 var model = new AdoptionRequestFormViewModel
                 {
                     AnimalId = 1,
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "Please let me adopt"
                 };
 
@@ -119,7 +119,7 @@
                     Id = 1,
                     AnimalId = 2,
                     UserId = "user-2",
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "first",
                     CreatedOn = DateTime.UtcNow,
                     Status = AdoptionRequestStatus.Pending
@@ -135,7 +135,7 @@
                 var model = new AdoptionRequestFormViewModel
                 {
                     AnimalId = 2,
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "duplicate"
                 };
 
@@ -158,7 +158,7 @@
                 {
                     AnimalId = 3,
                     UserId = "user-3",
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "hey",
                     CreatedOn = DateTime.UtcNow,
                     Status = AdoptionRequestStatus.Pending
@@ -194,8 +194,8 @@
                 context.Users.Add(new ApplicationUser { Id = "uH", UserName = "h" });
 
                 context.AdoptionRequests.AddRange(
-                    new AdoptionRequest { Id = 60, AnimalId = 9, UserId = "uH", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "m1", CreatedOn = DateTime.UtcNow.AddMinutes(-5), Status = AdoptionRequestStatus.Pending },
-                    new AdoptionRequest { Id = 61, AnimalId = 10, UserId = "uH", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "m2", CreatedOn = DateTime.UtcNow, Status = AdoptionRequestStatus.Pending }
+                    new AdoptionRequest { Id = 60, AnimalId = 9, UserId = "uH", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "m1", CreatedOn = DateTime.UtcNow.AddMinutes(-5), Status = AdoptionRequestStatus.Pending },
+                    new AdoptionRequest { Id = 61, AnimalId = 10, UserId = "uH", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "m2", CreatedOn = DateTime.UtcNow, Status = AdoptionRequestStatus.Pending }
                 );
 
                 await context.SaveChangesAsync();
@@ -236,9 +236,9 @@
 
                 // Seed adoption requests with different statuses and created dates
                 context.AdoptionRequests.AddRange(
-                    new AdoptionRequest { Id = 1000, AnimalId = 100, UserId = "admin-u1", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "r1", CreatedOn = DateTime.UtcNow.AddMinutes(-30), Status = AdoptionRequestStatus.Pending },
-                    new AdoptionRequest { Id = 1001, AnimalId = 101, UserId = "admin-u2", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "r2", CreatedOn = DateTime.UtcNow.AddMinutes(-20), Status = AdoptionRequestStatus.Approved },
-                    new AdoptionRequest { Id = 1002, AnimalId = 100, UserId = "admin-u2", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "r3", CreatedOn = DateTime.UtcNow.AddMinutes(-10), Status = AdoptionRequestStatus.Rejected }
+                    new AdoptionRequest { Id = 1000, AnimalId = 100, UserId = "admin-u1", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "r1", CreatedOn = DateTime.UtcNow.AddMinutes(-30), Status = AdoptionRequestStatus.Pending },
+                    new AdoptionRequest { Id = 1001, AnimalId = 101, UserId = "admin-u2", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "r2", CreatedOn = DateTime.UtcNow.AddMinutes(-20), Status = AdoptionRequestStatus.Approved },
+                    new AdoptionRequest { Id = 1002, AnimalId = 100, UserId = "admin-u2", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "r3", CreatedOn = DateTime.UtcNow.AddMinutes(-10), Status = AdoptionRequestStatus.Rejected }
                 );
 
                 await context.SaveChangesAsync();
@@ -282,7 +282,7 @@
                     Id = 2000,
                     AnimalId = 200,
                     UserId = "detail-u1",
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.Yes,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.Extensive,
                     Message = "please approve",
                     CreatedOn = DateTime.UtcNow,
                     Status = AdoptionRequestStatus.Pending
@@ -326,8 +326,8 @@
                 );
 
                 context.AdoptionRequests.AddRange(
-                    new AdoptionRequest { Id = 10, AnimalId = 4, UserId = "uA", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "a", CreatedOn = DateTime.UtcNow.AddMinutes(-2), Status = AdoptionRequestStatus.Pending },
-                    new AdoptionRequest { Id = 11, AnimalId = 4, UserId = "uB", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "b", CreatedOn = DateTime.UtcNow.AddMinutes(-1), Status = AdoptionRequestStatus.Pending }
+                    new AdoptionRequest { Id = 10, AnimalId = 4, UserId = "uA", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "a", CreatedOn = DateTime.UtcNow.AddMinutes(-2), Status = AdoptionRequestStatus.Pending },
+                    new AdoptionRequest { Id = 11, AnimalId = 4, UserId = "uB", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "b", CreatedOn = DateTime.UtcNow.AddMinutes(-1), Status = AdoptionRequestStatus.Pending }
                 );
 
                 await context.SaveChangesAsync();
@@ -367,7 +367,7 @@
                     Id = 20,
                     AnimalId = 5,
                     UserId = "uC",
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "please",
                     CreatedOn = DateTime.UtcNow,
                     Status = AdoptionRequestStatus.Pending
@@ -402,7 +402,7 @@
                     Id = 30,
                     AnimalId = 6,
                     UserId = "uD",
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "ok",
                     CreatedOn = DateTime.UtcNow,
                     Status = AdoptionRequestStatus.Pending
@@ -433,10 +433,10 @@
                 context.Users.AddRange(new ApplicationUser { Id = "uE", UserName = "e" }, new ApplicationUser { Id = "uF", UserName = "f" });
 
                 // Approved request for uE
-                context.AdoptionRequests.Add(new AdoptionRequest { Id = 40, AnimalId = 7, UserId = "uE", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "a", CreatedOn = DateTime.UtcNow.AddMinutes(-10), Status = AdoptionRequestStatus.Approved });
+                context.AdoptionRequests.Add(new AdoptionRequest { Id = 40, AnimalId = 7, UserId = "uE", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "a", CreatedOn = DateTime.UtcNow.AddMinutes(-10), Status = AdoptionRequestStatus.Approved });
 
                 // Rejected request for uF
-                context.AdoptionRequests.Add(new AdoptionRequest { Id = 41, AnimalId = 7, UserId = "uF", PreviousAdoptionExperience = PreviousAdoptionExperience.No, Message = "b", CreatedOn = DateTime.UtcNow.AddMinutes(-5), Status = AdoptionRequestStatus.Rejected });
+                context.AdoptionRequests.Add(new AdoptionRequest { Id = 41, AnimalId = 7, UserId = "uF", PreviousAdoptionExperience = PreviousAdoptionExperience.None, Message = "b", CreatedOn = DateTime.UtcNow.AddMinutes(-5), Status = AdoptionRequestStatus.Rejected });
 
                 await context.SaveChangesAsync();
             }
@@ -472,7 +472,7 @@
                     Id = 50,
                     AnimalId = 8,
                     UserId = "uG",
-                    PreviousAdoptionExperience = PreviousAdoptionExperience.No,
+                    PreviousAdoptionExperience = PreviousAdoptionExperience.None,
                     Message = "msg",
                     CreatedOn = DateTime.UtcNow,
                     Status = AdoptionRequestStatus.Rejected

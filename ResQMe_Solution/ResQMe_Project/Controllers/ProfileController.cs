@@ -100,7 +100,7 @@
             /* Fixes the issue with the non-updated greeting */
             await signInManager.RefreshSignInAsync(user);
 
-            TempData["Success"] = "Profile updated successfully.";
+            TempData["ProfileSuccess"] = "Profile updated successfully.";
 
             if (returnAnimalId.HasValue)
             {

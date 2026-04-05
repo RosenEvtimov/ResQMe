@@ -19,25 +19,43 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                Home
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Animal" asp-action="Index">Animals</a>
+                            <a class="nav-link" asp-area="" asp-controller="Animal" asp-action="Index">
+                                Animals
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Shelter" asp-action="Index">Shelters</a>
+                            <a class="nav-link" asp-area="" asp-controller="Shelter" asp-action="Index">
+                                Shelters
+                            </a>
                         </li>
+
                         @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Species" asp-action="Index">Species</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Species" asp-action="Index">
+                                    Species
+                                </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Breeds" asp-action="Index">Breeds</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Breeds" asp-action="Index">
+                                    Breeds
+                                </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="AdoptionRequests" asp-action="Index">Adoption Requests</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="AdoptionRequests" asp-action="Index">
+                                    Adoption Requests
+                                </a>
                             </li>
                         }
                     </ul>
@@ -46,16 +64,21 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="page-content">
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
-    <footer class="border-top footer text-muted mt-4">
-        <div class="container text-center py-2">
+
+    <footer class="footer">
+        <div class="container text-center">
             &copy; 2026 - ResQMe - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
