@@ -69,8 +69,13 @@
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="AdoptionRequest" asp-action="Create"
+                    <a asp-area=""
+                       asp-controller="AdoptionRequest"
+                       asp-action="Create"
                        asp-route-animalId="@Model.Id"
+                       asp-route-returnUrl="@ViewBag.ReturnUrl"
+                       asp-route-fromShelterId="@ViewBag.FromShelterId"
+                       asp-route-shelterReturnUrl="@ViewBag.ShelterReturnUrl"
                        class="btn btn-success mt-2">
                         🐾 Adopt Me
                     </a>

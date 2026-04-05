@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    padding-bottom: 80px;
     background-color: #fdf6ee;
     font-family: 'Nunito', sans-serif;
     color: #3d2c1e;
@@ -74,6 +74,16 @@ body {
         box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
 
+/* Static cards - no hover lift effect */
+.card-static {
+    transition: none;
+}
+
+    .card-static:hover {
+        transform: none;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
 /* Buttons */
 .btn {
     border-radius: 20px;
@@ -94,12 +104,20 @@ body {
     }
 
 /* Footer */
-.footer {
+footer.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: #7b4f2e;
-    color: #f5dfc5 !important;
+    color: #f5dfc5;
+    padding: 1rem 0;
 }
 
-    .footer a {
+    footer.footer a {
+        color: #f5dfc5 !important;
+    }
+
+    footer.footer .text-muted {
         color: #f5dfc5 !important;
     }
 
@@ -145,6 +163,7 @@ h2 {
     height: 220px;
     width: 100%;
     object-fit: cover;
+    border-radius: 12px 12px 0 0;
 }
 
 /* Badge tweaks */
@@ -171,6 +190,13 @@ h2 {
     color: #5a3520;
 }
 
+/* Textarea resize lock */
+textarea.form-control {
+    resize: vertical;
+    max-height: 200px;
+    min-height: 100px;
+}
+
 /* Privacy policy page */
 .privacy-container {
     max-width: 900px;
@@ -182,4 +208,60 @@ h2 {
 
     .policy-section ul {
         margin-top: 8px;
+    }
+
+/* Animal carousel in shelter details */
+.animal-carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.animal-carousel-track {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.3s ease;
+    padding-bottom: 8px;
+}
+
+    .animal-carousel-track .animal-card-item {
+        min-width: 200px;
+        max-width: 200px;
+        flex-shrink: 0;
+    }
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: #7b4f2e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease;
+}
+
+    .carousel-arrow:hover {
+        background-color: #5a3520;
+    }
+
+    .carousel-arrow.left {
+        left: -8px;
+    }
+
+    .carousel-arrow.right {
+        right: -8px;
+    }
+
+    .carousel-arrow:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
     }

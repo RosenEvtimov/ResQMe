@@ -24,7 +24,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(int animalId)
+        public async Task<IActionResult> Create(int animalId, string? returnUrl, string? shelterReturnUrl, int? fromShelterId)
         {
             if (animalId <= 0)
             {
@@ -59,7 +59,10 @@
 
             var model = new AdoptionRequestFormViewModel
             {
-                AnimalId = animalId
+                AnimalId = animalId,
+                ReturnUrl = returnUrl,
+                ShelterReturnUrl = shelterReturnUrl,
+                FromShelterId = fromShelterId
             };
 
             return View(model);
@@ -101,12 +104,23 @@
             catch (InvalidOperationException ex)
             {
                 TempData["Error"] = ex.Message;
-                return RedirectToAction("Details", "Animal", new { id = model.AnimalId });
+                return RedirectToAction("Details", "Animal", new 
+                { 
+                    id = model.AnimalId,
+                    returnUrl = model.ReturnUrl,
+                    fromShelterId = model.FromShelterId,
+                    shelterReturnUrl = model.ShelterReturnUrl
+                });
             }
 
             TempData["Success"] = "Adoption request sent successfully.";
 
-            return RedirectToAction("Details", "Animal", new { id = model.AnimalId });
+            return RedirectToAction("Details", "Animal", new 
+            { id = model.AnimalId,
+                returnUrl = model.ReturnUrl,
+                fromShelterId = model.FromShelterId,
+                shelterReturnUrl = model.ShelterReturnUrl
+            });
         }
 
         [HttpGet]

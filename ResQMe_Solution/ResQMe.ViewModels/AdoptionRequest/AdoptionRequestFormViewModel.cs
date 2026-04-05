@@ -12,5 +12,9 @@
 
         [StringLength(500)]
         public string? Message { get; set; }
+
+        public string? ReturnUrl { get; set; }
+        public string? ShelterReturnUrl { get; set; }
+        public int? FromShelterId { get; set; }
     }
 }

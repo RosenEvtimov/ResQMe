@@ -14,11 +14,11 @@
     <!-- Sidebar Filters -->
     <div class="col-md-3">
         <form method="get" id="filterForm">
-            <div class="card p-3 mb-3">
+            <div class="filter-card p-3 mb-3">
 
                 <!-- Search -->
                 <div class="mb-3">
-                    <label class="form-label fw-500">Search</label>
+                    <label class="form-label fw-bold mb-3" style="color:#7b4f2e;">Filters</label>
                     <input type="text"
                            name="searchTerm"
                            value="@ViewBag.SearchTerm"
@@ -63,7 +63,7 @@
         <a asp-action="Add" 
            asp-route-returnUrl="@Context.Request.QueryString.Value"
            class="btn btn-success mb-3">
-            Add Breed
+            + Add Breed
         </a>
 
         @if (!Model.Items.Any())

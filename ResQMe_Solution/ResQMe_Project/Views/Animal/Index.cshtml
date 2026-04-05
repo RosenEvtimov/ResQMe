@@ -219,7 +219,7 @@
                                 <div class="mt-auto d-flex gap-1 flex-wrap">
                                     <a asp-action="Details" asp-route-id="@animal.Id"
                                        asp-route-returnUrl="@(Context.Request.QueryString.Value)"
-                                       class="btn btn-primary btn-sm">Details</a>
+                                       class="btn btn-primary btn-sm w-100">Details</a>
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <a asp-area="Admin" asp-controller="Animal" asp-action="Edit"

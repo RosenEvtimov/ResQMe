@@ -42,28 +42,61 @@
     }
     else
     {
-        <div class="row">
-            @foreach (var animal in Model.Animals)
-            {
-                <div class="col-md-3 mb-3">
-                    <div class="card h-100">
-                        <img src="@animal.ImageUrl" class="card-img-top"
-                             style="height:150px; object-fit:cover;" />
-                        <div class="card-body d-flex flex-column">
-                            <h6 class="fw-bold">@animal.Name</h6>
-                            <p class="mb-1">Age: @animal.Age</p>
-                            <p class="mb-2">Gender: @animal.Gender</p>
-                            <div class="mt-auto">
-                                <a asp-area="" asp-controller="Animal" asp-action="Details"
-                                   asp-route-id="@animal.Id"
-                                   asp-route-fromShelterId="@Model.Id"
-                                   asp-route-shelterReturnUrl="@ViewBag.ReturnUrl"
-                                   class="btn btn-primary btn-sm">View</a>
+        <div class="animal-carousel-wrapper px-4 mb-4">
+            <button class="carousel-arrow left" id="carouselPrev" onclick="scrollCarousel(-1)" disabled>&#8592;</button>
+            <button class="carousel-arrow right" id="carouselNext" onclick="scrollCarousel(1)">&#8594;</button>
+
+            <div class="animal-carousel-track" id="carouselTrack">
+                @foreach (var animal in Model.Animals)
+                {
+                    <div class="animal-card-item">
+                        <div class="card h-100">
+                            <img src="@animal.ImageUrl" class="card-img-top"
+                                 style="height:150px; object-fit:cover;" />
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="fw-bold">@animal.Name</h6>
+                                <p class="mb-1">Age: @animal.Age</p>
+                                <p class="mb-2">Gender: @animal.Gender</p>
+                                <div class="mt-auto">
+                                    <a asp-area="" asp-controller="Animal" asp-action="Details"
+                                       asp-route-id="@animal.Id"
+                                       asp-route-fromShelterId="@Model.Id"
+                                       asp-route-shelterReturnUrl="@ViewBag.ReturnUrl"
+                                       class="btn btn-primary btn-sm w-100">View</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
+
+        <script>
+            const track = document.getElementById('carouselTrack');
+            const prevBtn = document.getElementById('carouselPrev');
+            const nextBtn = document.getElementById('carouselNext');
+            const cardWidth = 216;
+            let currentIndex = 0;
+            const totalCards = @Model.Animals.Count();
+            const visibleCards = Math.floor(track.parentElement.offsetWidth / cardWidth);
+
+            function scrollCarousel(direction) {
+                currentIndex += direction;
+                currentIndex = Math.max(0, Math.min(currentIndex, totalCards - visibleCards));
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex >= totalCards - visibleCards;
+            }
+
+            window.addEventListener('resize', () => {
+                const newVisible = Math.floor(track.parentElement.offsetWidth / cardWidth);
+                if (currentIndex > totalCards - newVisible) {
+                    currentIndex = Math.max(0, totalCards - newVisible);
+                    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                }
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex >= totalCards - newVisible;
+            });
+        </script>
     }
 </div>

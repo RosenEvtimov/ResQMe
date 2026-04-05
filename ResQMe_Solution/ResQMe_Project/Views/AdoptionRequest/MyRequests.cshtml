@@ -1,7 +1,7 @@
 ﻿@using ResQMe.ViewModels.AdoptionRequest
 @model IEnumerable<MyAdoptionRequestsViewModel>
 
-<h2 class="fw-bold mb-4">My adoption requests</h2>
+<h2 class="fw-bold mb-4">My Adoption Requests</h2>
 
 @if (!Model.Any())
 {
@@ -14,11 +14,13 @@ else
         @foreach (var request in Model)
         {
             <div class="col-md-6 mb-3">
-                <div class="card">
+                <div class="card card-static">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="@request.AnimalImageUrl" class="img-fluid rounded-start"
-                                 style="height:160px; width:100%; object-fit:cover;" alt="@request.AnimalName" />
+                            <img src="@request.AnimalImageUrl"
+                                 class="img-fluid rounded-start"
+                                 style="height:160px; width:100%; object-fit:cover;"
+                                 alt="@request.AnimalName" />
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -31,15 +33,15 @@ else
                                     <strong>Status:</strong>
                                     @if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Pending)
                                     {
-                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <span class="badge bg-warning text-dark">⏳ Pending</span>
                                     }
                                     else if (request.Status == ResQMe.Data.Models.Enums.AdoptionRequestStatus.Approved)
                                     {
-                                        <span class="badge bg-success">Approved 🎉</span>
+                                        <span class="badge bg-success">🎉 Approved</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger">Rejected</span>
+                                        <span class="badge bg-danger">✗ Rejected</span>
                                     }
                                 </p>
                             </div>
