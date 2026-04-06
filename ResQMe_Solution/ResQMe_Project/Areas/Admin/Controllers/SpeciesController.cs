@@ -20,8 +20,11 @@
         public async Task<IActionResult> Index(string? searchTerm, int page = 1)
         {
             const int pageSize = 10;
+
             var model = await speciesService.GetAllSpeciesAsync(searchTerm, page, pageSize);
+
             ViewBag.SearchTerm = searchTerm;
+
             return View(model);
         }
 
