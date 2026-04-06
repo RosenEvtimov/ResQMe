@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResQMe.Data;
 
@@ -11,9 +12,11 @@ using ResQMe.Data;
 namespace ResQMe.Data.Migrations
 {
     [DbContext(typeof(ResQMeDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260406170841_AddExtraSeedingDataForAnimalsAndShelters")]
+    partial class AddExtraSeedingDataForAnimalsAndShelters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,7 +314,7 @@ namespace ResQMe.Data.Migrations
                             BreedType = 2,
                             Description = "Clingy and calm stray cat.",
                             Gender = 1,
-                            ImageUrl = "https://www.daskalo.com/nafta1234/files/2015/03/640px-Domestic_cat_cropped.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/960px-Cat_November_2010-1a.jpg",
                             IsAdopted = false,
                             Name = "Corny",
                             ShelterId = 3,

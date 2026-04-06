@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using ResQMe.Data.Models;
     using ResQMe.Data.Models.Enums;
+    using static System.Net.WebRequestMethods;
 
     public class AnimalEntityConfiguration : IEntityTypeConfiguration<Animal>
     {
@@ -50,6 +51,34 @@
                 ImageUrl = "https://media.4-paws.org/8/5/5/4/85545b5798b851ea1cf81552bc56a49d96a71882/VIER%20PFOTEN_2023-10-19_00151-2850x1900-2746x1900-1920x1328.jpg",
                 IsAdopted = true,
                 ShelterId = 1
+            },
+            new Animal
+            {
+                Id = 4,
+                Name = "Buba",
+                Age = 2,
+                Gender = Gender.Female,
+                SpeciesId = 2,
+                BreedType = BreedType.Unknown,
+                BreedId = null,
+                Description = "Playful and energetic indoor cat.",
+                ImageUrl = "https://www.catster.com/wp-content/uploads/2023/11/Tuxedo-indoor-cat-sitting-on-the-bed_Maria-Wan_Shutterstock-800x534.jpg",
+                IsAdopted = true,
+                ShelterId = 2
+            },
+            new Animal
+            {
+                Id = 5,
+                Name = "Corny",
+                Age = 3,
+                Gender = Gender.Female,
+                SpeciesId = 2,
+                BreedType = BreedType.Unknown,
+                BreedId = null,
+                Description = "Clingy and calm stray cat.",
+                ImageUrl = "https://www.daskalo.com/nafta1234/files/2015/03/640px-Domestic_cat_cropped.jpg",
+                IsAdopted = false,
+                ShelterId = 3
             }
         };
 

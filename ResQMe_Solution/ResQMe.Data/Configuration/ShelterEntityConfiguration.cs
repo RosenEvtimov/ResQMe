@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using ResQMe.Data.Models;
+    using static System.Net.WebRequestMethods;
 
     public class ShelterEntityConfiguration : IEntityTypeConfiguration<Shelter>
     {
@@ -29,6 +30,28 @@
                 ImageUrl = "https://i.ibb.co/dsSj025K/Safe-Paws-AI.png",
                 Phone = "056333444",
                 Email = "safepaws@gmail.com"
+            },
+            new Shelter()
+            {
+                Id = 3,
+                Name = "Hope Haven",
+                City = "Varna",
+                Address = "ul.Hristo Botev 42",
+                Description = "Welcoming rescue center founded with the purpose of giving abandoned animals a second chance.",
+                ImageUrl = "https://i.ibb.co/F4vkpv4x/Hope-Haven.jpg",
+                Phone = "056555666",
+                Email = "hopehaven@gmail.com"
+            },
+            new Shelter()
+            {
+                Id = 4,
+                Name = "Furever Home",
+                City = "Sofia",
+                Address = "ul.James Bourchier 85",
+                Description = "Compassionate animal shelter focused on rescuing, rehabilitating, and rehoming animals in need of care and love.",
+                ImageUrl = "https://i.ibb.co/6cmWSMT9/Furever-Home.png",
+                Phone = "056777888",
+                Email = "fureverhome@gmail.com"
             }
         };
 

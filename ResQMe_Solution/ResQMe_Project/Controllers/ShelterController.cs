@@ -18,7 +18,7 @@
             List<string> selectedCities,
             int page = 1)
         {
-            const int pageSize = 2;
+            const int pageSize = 3;
 
             var model = await shelterService.GetAllSheltersAsync(
                 searchTerm,
