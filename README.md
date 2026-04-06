@@ -31,6 +31,8 @@ ResQMe is an ASP.NET Core Razor MVC web application for adopting animals from sh
 - Authentication & Authorization
   - ASP.NET Core Identity with `Admin` and `User` roles.
   - Middleware ensures newly registered users are assigned the `User` role if no roles assigned.
+- Areas
+  - Well-organised application structure - normal and admin areas with role-specific elements (controllers, views, etc.)
 - Animals
   - Public list of animals.
   - Detailed animal page with image, age, gender, breed/species, shelter info and adoption status.
@@ -49,16 +51,20 @@ ResQMe is an ASP.NET Core Razor MVC web application for adopting animals from sh
   - Responsive UI using Bootstrap.
 - Database & Seeding
   - EF Core + SQL Server. Migrations included with initial seed data for species, breeds, shelters, animals and Identity schema.
+- Testing
+  - Unit tests covering all of the business logic in the application services.
 
 ---
 
 ## Architecture & Project layout
 
-- `ResQMe_Project/` — Web application (Controllers, Views, Program.cs, wwwroot static assets)
-- `ResQMe.Data/` — EF Core DbContext, entity models and migrations
+- `ResQMe.Data/` — EF Core DbContext, configuration and migrations
+- `ResQMe.Data.Models/` - Entity models, enums, identity models
 - `ResQMe.Services.Core/` — Business logic services (registered in DI in `Program.cs`)
 - `ResQMe.ViewModels/` — View models used by controllers and views
-- `Areas/Identity/` — Identity UI Razor Pages for registration/login/account management
+- `ResQMe_Project/` — Web application (Controllers, Views, Program.cs, wwwroot static assets)
+- `ResQMe.GCommon` — Entity validation constants
+- `ResQMe.Tests` - Unit tests of the business logic
 
 Pattern: Controllers + Razor Views for the main app; Identity uses Razor Pages. Services are injected via DI and handle business rules and data access orchestration.
 
@@ -160,6 +166,8 @@ Initial sample data (species, many breeds, two shelters and three sample animals
 - Client UI:
   - Navigation reflects role membership (admin-only links show only for `Admin` role).
   - Animal details show an "Adopt Me" button only to signed-in users in the `User` role, and only for animals that are not adopted yet.
+  - Pagination, searchbars and filters allow for a more clean and easy navigation
+  - Implemented custom error views to better help the `User` understand what went wrong
 - Admin pages:
   - Admin can manage species, breeds, shelters, animals and adoption requests (approve/reject).
 - Validation:
