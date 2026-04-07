@@ -15,7 +15,7 @@ namespace ResQMe.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "ImageUrl",
-                value: "https://www.daskalo.com/nafta1234/files/2015/03/640px-Domestic_cat_cropped.jpg");
+                value: "https://images.ctfassets.net/4cuokmrwdiqv/3mwx2f0pzK0g09nQlXa3eZ/598f6f47d346e85bbc231e10c86ddc85/tabby-cat-breed-page-carousel-image-1.jpg");
         }
 
         /// <inheritdoc />
